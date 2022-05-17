@@ -8,14 +8,14 @@ namespace Services
 {
     public class ContactService
     {
-        public static List<Contact> contacts = new List<Contact>();
+        public static List<Chats> contacts = new List<Chats>();
 
-        public List<Contact> GetAll(int id)
+        public List<Chats> GetAll()
         {
             return contacts;
         }
 
-        public Contact Get(int id)
+        public Chats Get(int id)
         {
             return contacts.Find(x => x.Id == id);
         }
@@ -24,7 +24,7 @@ namespace Services
         {
             int nextId = contacts.Max(x => x.Id) + 1;
 
-            contacts.Add(new Contact()
+            contacts.Add(new Chats()
             {
                 Id = nextId,
                 UserName = username,
@@ -36,11 +36,10 @@ namespace Services
             });
         }
         public void Edit(int id, string username, string nickname,
-            string profilepicURL, string password, string lastmessage, string lastmsgdate, string server, Contact currentContact)
+            string profilepicURL, string password, string lastmessage, string lastmsgdate, string server, Chats currentContact)
         {
-            Contact contact = Get(id);
+            Chats contact = Get(id);
 
-            contact.Id = id;
             contact.UserName = username;
             contact.Nickname = nickname;
             contact.ProfilePicURL = profilepicURL;

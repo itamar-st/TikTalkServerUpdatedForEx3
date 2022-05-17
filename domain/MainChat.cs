@@ -1,16 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+namespace Domain;
 
-namespace Domain
+public class MainChat
 {
-    public class MainChat
-    {
-        [Required]
-        User user { get; set; }
-        [Required]
-        List<Contact> contacts { get; set; }
-        [Required]
-        Contact CurrentContact { get; set; }
-        [Required]
-        Chat Chat { get; set; }
-    }
+    [Required]
+    public User user { get; set; }
+    public Contact? CurrentContact { get; set; }
+    public Chat? CurrentChat { get; set; }
 }
