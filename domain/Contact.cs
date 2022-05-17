@@ -18,5 +18,5 @@ public class Contact
     public string Last { get; set; }
     public string LastDate { get; set; }
     public string Server { get; set; }
-    public List<Message>? ChatWithContact { get; set; } 
+    public Chat? ChatWithContact { get; set; } 
 }

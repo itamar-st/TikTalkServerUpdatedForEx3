@@ -8,45 +8,50 @@ namespace Services
 {
     public class ContactService
     {
-        public static List<Chats> contacts = new List<Chats>();
+        public static List<Contact> contacts = new List<Contact>();
 
-        public List<Chats> GetAll()
+        public List<Contact> GetAll()
         {
             return contacts;
         }
 
-        public Chats Get(int id)
+        public Contact Get(int id)
         {
             return contacts.Find(x => x.Id == id);
         }
-        public void Create(string username, string nickname,
-            string profilepicURL, string password, string lastmessage, string lastmsgdate, string server)
+        public void Create(string username, string nickname, string profilepicURL, string server)
         {
             int nextId = contacts.Max(x => x.Id) + 1;
-
-            contacts.Add(new Chats()
+            contacts.Add(new Contact()
             {
                 Id = nextId,
                 UserName = username,
                 Nickname = nickname,
                 ProfilePicURL = profilepicURL,
-                LastMessage = lastmessage,
-                LastMsgDate = lastmsgdate,
+                Last = null,
+                LastDate = null,
+                ChatWithContact = new Chat(),
                 Server = server
             });
         }
         public void Edit(int id, string username, string nickname,
-            string profilepicURL, string password, string lastmessage, string lastmsgdate, string server, Chats currentContact)
+            string profilepicURL, string password, string lastmessage, string lastmsgdate, string server, Contact currentContact)
         {
-            Chats contact = Get(id);
+            Contact contact = Get(id);
 
             contact.UserName = username;
             contact.Nickname = nickname;
             contact.ProfilePicURL = profilepicURL;
-            contact.LastMessage = lastmessage;
-            contact.LastMsgDate = lastmsgdate;
+            contact.Last = lastmessage;
+            contact.LastDate = lastmsgdate;
             contact.Server = server;
         }
+
+        public void Create(Contact contact)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             contacts.RemoveAll(x => x.Id == id);
