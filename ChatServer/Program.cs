@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-// TODO: check if indeed singletone
+// TODO: check if indeed singletone.
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<ContactService>();
 var app = builder.Build();
