@@ -11,7 +11,10 @@ namespace ChatServer.Controllers
     {
         private static Services.ContactService contactService;
 
-
+        public ContactController()
+        {
+            contactService = new Services.ContactService();
+        }
         [HttpGet]
         // GET: ContactController
         public IEnumerable<Contact> Index()
@@ -30,6 +33,7 @@ namespace ChatServer.Controllers
         [HttpPost]
         public void Create([Bind("UserName, NickName, ProfilePicURL, Server")]Contact contact)
         { 
+            //TODO: check how to get multiple args as json
             contactService.Create(contact);
         }
         

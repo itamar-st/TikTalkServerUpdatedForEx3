@@ -14,9 +14,8 @@ public class Contact
     [Required]
     public string Nickname { get; set; }
     public string? ProfilePicURL { get; set; }
-    [Required]
-    public string Last { get; set; }
-    public string LastDate { get; set; }
+    public string? Last { get; set; }
+    public string? LastDate { get; set; }
     public string Server { get; set; }
     public Chat? ChatWithContact { get; set; } 
 }

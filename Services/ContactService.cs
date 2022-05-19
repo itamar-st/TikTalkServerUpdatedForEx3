@@ -28,6 +28,7 @@ namespace Services
                 UserName = username,
                 Nickname = nickname,
                 ProfilePicURL = profilepicURL,
+                //TODO: should be null?
                 Last = null,
                 LastDate = null,
                 ChatWithContact = new Chat(),
@@ -49,7 +50,7 @@ namespace Services
 
         public void Create(Contact contact)
         {
-            throw new NotImplementedException();
+            contacts.Add(contact);
         }
 
         public void Delete(int id)
