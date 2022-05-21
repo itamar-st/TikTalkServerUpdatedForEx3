@@ -9,33 +9,31 @@ namespace ChatServer.Controllers
     [Route("[controller]")]
     public class ContactController : ControllerBase
     {
-        private static Services.ContactService contactService;
+        private static ContactService _contactService;
 
         public ContactController()
         {
-            contactService = new Services.ContactService();
+            _contactService = new ContactService();
         }
         [HttpGet]
         // GET: ContactController
         public IEnumerable<Contact> Index()
         {
             //TODO: return not found exception if not exist
-            return contactService.GetAll();
+            return _contactService.GetAll();
         }
         [HttpGet("{id}")]
         // GET: ContactController/Details/5 
-        public Contact Details(int id)
+        public Contact Details(string id)
         {
-            return contactService.Get(id);
+            return _contactService.Get(id);
         }
-
         // POST: ContactController/Create
         [HttpPost]
-        public void Create([Bind("UserName, NickName, ProfilePicURL, Server")]Contact contact)
+        public void Create([Bind("Id, Name, Server")]Contact contact)
         { 
             //TODO: check how to get multiple args as json
-            contactService.Create(contact);
+            _contactService.Create(contact);
         }
-        
     }
 }

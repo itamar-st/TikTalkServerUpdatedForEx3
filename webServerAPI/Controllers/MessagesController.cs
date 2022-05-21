@@ -1,83 +1,88 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services;
+using Domain;
+using System.Text.Json.Nodes;
 
 namespace ChatServer.Controllers
 {
-    public class MessagesController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    //TODO: add response code?
+    public class MessagesController : ControllerBase
     {
+        private static MessageService _messageService;
         // GET: MessagesController
-        public ActionResult Index()
+        public MessagesController()
         {
-            return View();
+            _messageService = new MessageService();
         }
+
+        [HttpGet("{contactId}")]
+        public List<Message> Index(string contactId)
+        {
+            return _messageService.GetAll(contactId);
+        }
+
+        [HttpGet("{contactId}/{msgId}")]
+        //[Route("api/contacts/{contactId}/messages/{msgId}")]
 
         // GET: MessagesController/Details/5
-        public ActionResult Details(int id)
+        public Message Details(string contactId, int msgId)
         {
-            return View();
-        }
-
-        // GET: MessagesController/Create
-        public ActionResult Create()
-        {
-            return View();
+            return _messageService.Get(contactId, msgId);
         }
 
         // POST: MessagesController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        [HttpPost("{contactId}")]
+        //[Route("api/contacts/{contactId}/messages")]
 
-        // GET: MessagesController/Edit/5
-        public ActionResult Edit(int id)
+        //[ValidateAntiForgeryToken]
+        public void Create(string contactId, [FromBody] JsonObject content)
         {
-            return View();
+             _messageService.Create(contactId, content);
+        }
+        [HttpPut("{contactId}/{msgId}")]
+        //GET: MessagesController/Edit/5
+        public void Edit(string contactId, int msgId, [FromBody] JsonObject content)
+        {
+            _messageService.Edit(contactId, msgId, content);
         }
 
         // POST: MessagesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: MessagesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: MessagesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: MessagesController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

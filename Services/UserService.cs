@@ -15,12 +15,16 @@ namespace Services
         {
             return users.Find(x => x.Id == id);
         }
-        public void Create(string username, string nickname, string profilepicURL, string password)
-        {
-            int nextId = users.Max(x => x.Id) + 1;
+        //public void create(string username, string nickname, string password)
+        //{
+        //    int nextid = users.max(x => x.id) + 1;
 
-            users.Add(new User() { Id = nextId, UserName = username,
-                Nickname = nickname, ProfilePicURL = profilepicURL, Password = password});
+        //    users.add(new user() { id = nextid, username = username,
+        //        nickname = nickname, password = password});
+        //}
+        public void Create(User user)
+        {
+            users.Add(user);
         }
 
     }

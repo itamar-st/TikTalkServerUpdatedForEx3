@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Domain;
 namespace Services
@@ -10,39 +11,47 @@ namespace Services
     {
         public static List<Message> messages = new List<Message>();
 
-        public List<Message> GetAll()
+        public List<Message> GetAll(string contactId)
         {
-            return messages;
+            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            return currentContact.ChatWithContact;
         }
 
-        public Message Get(int id)
+        public Message Get(string contactId, int msgId)
         {
-            return messages.Find(x => x.Id == id);
+            Contact currentContact =  Services.ContactService.contacts.Find(x => x.Id == contactId);
+            return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
-        public void Create(string created, bool sent, string content)
+        public void Create(string contactId, JsonObject content)
         {
-            int nextId = messages.Max(x => x.Id) + 1;
-
-            messages.Add(new Message()
+            int nextid;
+            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            if(currentContact.ChatWithContact.Count == 0)
             {
-                Id = nextId,
-                Created = created,
-                Sent = sent, //TODO: send true from here?
-                Content = content
-            });
-        }
-        public void Edit(int id, string created, bool sent, string content)
-        {
-            Message message = Get(id);
+                nextid = 0;
+            }
+            else
+            {
+             nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
+            }
 
-            message.Created = created;
-                message.Sent = sent; //TODO: send true from here?
-            message.Content = content;
-            
-        }
-        public void Delete(int id)
+            currentContact.ChatWithContact.Add(new Message()
+            {
+                Id = nextid,
+                Created = DateTime.Now.ToString(),
+                Content = content["content"].ToString()
+            });
+            }
+        public void Edit(string contactId, int msgId, JsonObject content)
         {
-            messages.RemoveAll(x => x.Id == id);
+            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
+            currentMessage.Content = content["content"].ToString();
+        }
+        public void Delete(string contactId, int msgId)
+        {
+            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
         }
     }
 }

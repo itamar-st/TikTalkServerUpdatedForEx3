@@ -5,17 +5,13 @@ namespace Domain;
 public class Contact
 {
     [Required]
-    public int Id { get; set; }
+    public string Id { get; set; }   //Username
     [Required]
+    public string Name { get; set; }  //nickname
 
-    [Key]
-    public string UserName { get; set; }
-
+    public string? Last { get; set; } = "";
+    public string? Lastdate { get; set; } = "";
     [Required]
-    public string Nickname { get; set; }
-    public string? ProfilePicURL { get; set; }
-    public string? Last { get; set; }
-    public string? LastDate { get; set; }
     public string Server { get; set; }
-    public Chat? ChatWithContact { get; set; } 
+    public List<Message> ChatWithContact { get; set; } = new List<Message>();
 }

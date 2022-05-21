@@ -1,10 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Services;
+using Domain;
 namespace ChatServer.Controllers
 {
     public class UserController : Controller
     {
+        private static UserService _userService;
+
+        public UserController()
+        {
+            _userService = new UserService();
+        }
         // GET: UserController
         public ActionResult Index()
         {
