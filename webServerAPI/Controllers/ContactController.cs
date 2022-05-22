@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services;
 using Domain;
 using System.Text.Json.Nodes;
+using webServerAPI.Controllers;
 
 namespace ChatServer.Controllers
 {
@@ -12,10 +13,12 @@ namespace ChatServer.Controllers
     public class ContactController : ControllerBase
     {
         private static ContactService _contactService;
+        private static InvitationService _invitationService;
 
         public ContactController()
         {
             _contactService = new ContactService();
+            _invitationService = new InvitationService();
         }
         [HttpGet]
         // GET: ContactController

@@ -22,7 +22,7 @@ namespace Services
             Contact currentContact =  Services.ContactService.contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
-        public void Create(string contactId, JsonObject content)
+        public void Create(string contactId, JsonObject content, bool fromTransfer)
         {
             int nextid;
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
@@ -39,9 +39,12 @@ namespace Services
             {
                 Id = nextid,
                 Created = DateTime.Now.ToString(),
-                Content = content["content"].ToString()
+                Content = content["content"].ToString(),
+                Sent = fromTransfer
             });
             }
+
+
         public void Edit(string contactId, int msgId, JsonObject content)
         {
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);

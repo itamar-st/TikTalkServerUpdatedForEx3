@@ -9,9 +9,13 @@ namespace Services
 {
     public class InvitationService
     {
+        ContactService contactService = new ContactService();
         public void SendInvitation(Invitation invitation)
         {
-            
+            Contact contact = new Contact();
+            contact.Id = invitation.From;
+            contact.Server = invitation.Server;
+            contactService.Create(contact);
         }
     }
 }
