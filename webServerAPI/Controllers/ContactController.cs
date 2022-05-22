@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using Services;
 using Domain;
+using System.Text.Json.Nodes;
+
 namespace ChatServer.Controllers
 {
     [ApiController]
@@ -34,6 +36,17 @@ namespace ChatServer.Controllers
         { 
             //TODO: check how to get multiple args as json
             _contactService.Create(contact);
+        }
+        [HttpPut("{contactId}")]
+        //put: ContactController/Edit/5
+        public void Edit(string contactId, [FromBody] JsonObject content)
+        {
+            _contactService.Edit(contactId, content);
+        }
+        [HttpDelete("{contactId}")]
+        public void Delete(string contactId)
+        {
+            _contactService.Delete(contactId);
         }
     }
 }

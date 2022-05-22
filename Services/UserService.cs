@@ -11,21 +11,21 @@ namespace Services
     {
         public static List<User> users = new List<User>();
 
-        public User Get(int id)
+        public List<User> GetAll()
+        {
+            return users;
+        }
+        public User Get(string id)
         {
             return users.Find(x => x.Id == id);
         }
-        //public void create(string username, string nickname, string password)
-        //{
-        //    int nextid = users.max(x => x.id) + 1;
-
-        //    users.add(new user() { id = nextid, username = username,
-        //        nickname = nickname, password = password});
-        //}
+        public void Delete(string id)
+        {
+            users.RemoveAll(x => x.Id == id);
+        }
         public void Create(User user)
         {
             users.Add(user);
         }
-
     }
 }

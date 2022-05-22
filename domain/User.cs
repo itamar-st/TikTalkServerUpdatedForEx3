@@ -4,9 +4,9 @@ namespace Domain;
 public class User
 {
     [Required]
-    public int Id { get; set; }
+    public string Id { get; set; } //username
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } // Nickname
     
     [Required]
     public string ProfilePicURL { get; set; }
