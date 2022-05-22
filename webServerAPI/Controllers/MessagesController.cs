@@ -40,7 +40,9 @@ namespace ChatServer.Controllers
         //[ValidateAntiForgeryToken]
         public void Create(string contactId, [FromBody] JsonObject content)
         {
-             _messageService.Create(contactId, content);
+            // true because i sent the message
+             _messageService.Create(contactId, content, true);
+
         }
         [HttpPut("{contactId}/{msgId}")]
         //GET: MessagesController/Edit/5
