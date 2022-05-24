@@ -11,18 +11,19 @@ namespace Services
     {
         public static List<Message> messages = new List<Message>();
 
-        public List<Message> GetAll(string contactId)
+        public List<Message> GetAll(string user, string contactId)
         {
+
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact;
         }
 
-        public Message Get(string contactId, int msgId)
+        public Message Get(string user, string contactId, int msgId)
         {
             Contact currentContact =  Services.ContactService.contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
-        public void Create(string contactId, JsonObject content, bool fromTransfer)
+        public void Create(string user, string contactId, JsonObject content, bool fromTransfer)
         {
             int nextid;
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
@@ -45,13 +46,13 @@ namespace Services
             }
 
 
-        public void Edit(string contactId, int msgId, JsonObject content)
+        public void Edit(string user, string contactId, int msgId, JsonObject content)
         {
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
             Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
             currentMessage.Content = content["content"].ToString();
         }
-        public void Delete(string contactId, int msgId)
+        public void Delete(string user, string contactId, int msgId)
         {
             Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
             currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);

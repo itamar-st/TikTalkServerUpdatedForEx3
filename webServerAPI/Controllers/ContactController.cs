@@ -22,34 +22,34 @@ namespace ChatServer.Controllers
         }
         [HttpGet]
         // GET: ContactController
-        public IEnumerable<Contact> Index()
+        public List<Contact> Index(string user)
         {
             //TODO: return not found exception if not exist
-            return _contactService.GetAll();
+            return _contactService.GetAll(user);
         }
         [HttpGet("{id}")]
         // GET: ContactController/Details/5 
-        public Contact Details(string id)
+        public Contact Details(string user, string id)
         {
-            return _contactService.Get(id);
+            return _contactService.Get(user, id);
         }
         // POST: ContactController/Create
         [HttpPost]
-        public void Create([Bind("Id, Name, Server")]Contact contact)
+        public void Create(string user, [Bind("Id, Name, Server")]Contact contact)
         { 
             //TODO: check how to get multiple args as json
-            _contactService.Create(contact);
+            _contactService.Create(user, contact);
         }
         [HttpPut("{contactId}")]
         //put: ContactController/Edit/5
-        public void Edit(string contactId, [FromBody] JsonObject content)
+        public void Edit(string user, string contactId, [FromBody] JsonObject content)
         {
-            _contactService.Edit(contactId, content);
+            _contactService.Edit(user, contactId, content);
         }
         [HttpDelete("{contactId}")]
-        public void Delete(string contactId)
+        public void Delete(string user, string contactId)
         {
-            _contactService.Delete(contactId);
+            _contactService.Delete(user, contactId);
         }
     }
 }

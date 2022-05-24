@@ -1,90 +1,59 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using Domain;
-namespace ChatServer.Controllers
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
-        private static UserService _userService;
+        private InterfaceUsersService service;
 
         public UserController()
         {
-            _userService = new UserService();
-        }
-        // GET: UserController
-        public ActionResult Index()
-        {
-            return View();
+            this.service = new UserService();
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
+
+        // get all users
+        // GET: api/<UsersController>
+        [HttpGet]
+        public IEnumerable<User> Get()
         {
-            return View();
+            return service.Get();
         }
 
-        // GET: UserController/Create
-        public ActionResult Create()
+
+        // get user
+        // GET api/<UsersController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
         {
-            return View();
+            var user = service.Get(id);
+            if(user == null) return NotFound();
+            return Ok(user);
         }
 
-        // POST: UserController/Create
+
+        // add user
+        // POST api/<UsersController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public void Post([FromBody] User user)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            service.Post(user);
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+
+        // delete user
+        // DELETE api/<UsersController>/5
+        [HttpDelete("{id}")]
+        public void Delete(string id)
         {
-            return View();
+            service.Delete(id);
         }
 
-        // POST: UserController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
