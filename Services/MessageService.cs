@@ -5,28 +5,35 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Domain;
+using Services;
 namespace Services
 {
     public class MessageService
     {
         public static List<Message> messages = new List<Message>();
+        UserService userService = new UserService();
 
         public List<Message> GetAll(string user, string contactId)
         {
-
-            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact;
         }
 
         public Message Get(string user, string contactId, int msgId)
         {
-            Contact currentContact =  Services.ContactService.contacts.Find(x => x.Id == contactId);
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
         public void Create(string user, string contactId, JsonObject content, bool fromTransfer)
         {
             int nextid;
-            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
             if(currentContact.ChatWithContact.Count == 0)
             {
                 nextid = 0;
@@ -48,13 +55,17 @@ namespace Services
 
         public void Edit(string user, string contactId, int msgId, JsonObject content)
         {
-            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
             Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
             currentMessage.Content = content["content"].ToString();
         }
         public void Delete(string user, string contactId, int msgId)
         {
-            Contact currentContact = Services.ContactService.contacts.Find(x => x.Id == contactId);
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
             currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
         }
     }
