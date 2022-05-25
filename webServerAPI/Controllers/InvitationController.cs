@@ -15,7 +15,7 @@ public class invitationsController : ControllerBase
     {
         _invitationService = new InvitationService();
     }
-    // POST api/<invitationController>
+    // POST api/invitations
     [HttpPost]
     public IActionResult Post([Bind("From, To, Server")] Invitation invitation)
     {

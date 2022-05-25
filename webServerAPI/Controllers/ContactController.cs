@@ -53,7 +53,7 @@ namespace ChatServer.Controllers
             return Created("api/contacts", "");
         }
         [HttpPut("{contactId}")]
-        //PUT: api/contacts/id
+        //PUT: api/contacts/{id}
         public IActionResult Edit(string user, string contactId, [FromBody] JsonObject content)
         {
             if (_contactService.Edit(user, contactId, content) == false) {

@@ -16,7 +16,7 @@ namespace webServerAPI.Controllers
         {
             _transferService = new TransferService();
         }
-        // POST api/<transferController>
+        // POST api/transfer
         [HttpPost]
         public IActionResult Post([Bind("From, To, Content")] Transfer transfer)
         {
