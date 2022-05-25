@@ -5,6 +5,7 @@ namespace Services
     public class MessageService
     {
         UserService userService = new UserService();
+        ContactService contactService = new ContactService();
 
         public List<Message> GetAll(string user, string contactId)
         {
@@ -55,14 +56,15 @@ namespace Services
                 {
                     nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
                 }
-
-                currentContact.ChatWithContact.Add(new Message()
+                Message message = new Message()
                 {
                     Id = nextid,
                     Created = DateTime.Now.ToString(),
                     Content = content["content"].ToString(),
                     Sent = fromTransfer
-                });
+                };
+                currentContact.ChatWithContact.Add(message);
+                contactService.EditLastMsg(user, contactId, message.Content, message.Created);
                 return true;
             }
             catch { return false; }

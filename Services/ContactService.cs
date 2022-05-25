@@ -75,7 +75,6 @@ namespace Services
         {
             try
             {
-                //TODO: check if field actualy exists in JSON obj
                 User currntUser = userService.Get(user);
 
                 Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
@@ -87,7 +86,19 @@ namespace Services
             }
             catch { return false; }
         }
+        public bool EditLastMsg(string user, string contactId, string last, string lastDate)
+        {
+            try
+            {
+                User currntUser = userService.Get(user);
 
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+                currentContact.Last = last;
+                currentContact.Lastdate = lastDate;
+                return true;
+            }
+            catch { return false; }
+        }
         public bool Delete(string user, string id)
         {
             try

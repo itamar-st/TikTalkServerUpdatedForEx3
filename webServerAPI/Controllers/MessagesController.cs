@@ -8,7 +8,6 @@ namespace ChatServer.Controllers
 {
     [ApiController]
     [Route("api/contacts")]
-    //TODO: add response code?
     public class messagesController : ControllerBase
     {
         private static MessageService _messageService;
