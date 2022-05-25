@@ -13,17 +13,41 @@ namespace Services
     {
         public static List<Contact> contacts = new List<Contact>();
         UserService userService = new UserService();
-        public List<Contact> GetAll(string user)
+        public List<ContactRequest> GetAll(string user)
         {
             User currntUser = userService.Get(user);
-            return currntUser.Contacts.ToList();
+            List<Contact> usersContacts = currntUser.Contacts;
+            List<ContactRequest> contactsForSending = new List<ContactRequest>();
+            foreach(Contact contact in usersContacts)
+            {
+                ContactRequest contactRequest = new ContactRequest()
+                {
+                    Id = contact.Id,
+                    Name = contact.Name,
+                    Last = contact.Last,
+                    Lastdate = contact.Lastdate,
+                    Server = contact.Server
+                };
+                 contactsForSending.Add(contactRequest);
+            }
+            return contactsForSending;
+
         }
 
-        public Contact Get(string user, string contactId)
+        public ContactRequest Get(string user, string contactId)
         {
             User currntUser = userService.Get(user);
-            return currntUser.Contacts.ToList().Find(x => x.Id == contactId);
-        }
+            Contact userContact = currntUser.Contacts.Find(x => x.Id == contactId);
+                ContactRequest contactRequest = new ContactRequest()
+                {
+                    Id = userContact.Id,
+                    Name = userContact.Name,
+                    Last = userContact.Last,
+                    Lastdate = userContact.Lastdate,
+                    Server = userContact.Server
+                };
+            return contactRequest;
+            }
 
         public void Create(string user, Contact contact)
         {

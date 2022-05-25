@@ -7,13 +7,13 @@ using System.Text.Json.Nodes;
 namespace ChatServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     //TODO: add response code?
-    public class MessagesController : ControllerBase
+    public class messagesController : ControllerBase
     {
         private static MessageService _messageService;
-        // GET: MessagesController
-        public MessagesController()
+        // GET: messagesController
+        public messagesController()
         {
             _messageService = new MessageService();
         }
@@ -27,13 +27,13 @@ namespace ChatServer.Controllers
         [HttpGet("{contactId}/{msgId}")]
         //[Route("api/contacts/{contactId}/messages/{msgId}")]
 
-        // GET: MessagesController/Details/5
+        // GET: messagesController/Details/5
         public Message Details(string user, string contactId, int msgId)
         {
             return _messageService.Get(user, contactId, msgId);
         }
 
-        // POST: MessagesController/Create
+        // POST: messagesController/Create
         [HttpPost("{contactId}")]
         //[Route("api/contacts/{contactId}/messages")]
 
@@ -45,7 +45,7 @@ namespace ChatServer.Controllers
 
         }
         [HttpPut("{contactId}/{msgId}")]
-        //GET: MessagesController/Edit/5
+        //GET: messagesController/Edit/5
         public void Edit(string user, string contactId, int msgId, [FromBody] JsonObject content)
         {
             _messageService.Edit(user, contactId, msgId, content);

@@ -9,31 +9,31 @@ using webServerAPI.Controllers;
 namespace ChatServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ContactController : ControllerBase
+    [Route("api/[controller]")]
+    public class contactsController : ControllerBase
     {
         private static ContactService _contactService;
         private static InvitationService _invitationService;
 
-        public ContactController()
+        public contactsController()
         {
             _contactService = new ContactService();
             _invitationService = new InvitationService();
         }
         [HttpGet]
-        // GET: ContactController
-        public List<Contact> Index(string user)
+        // GET: contactsController
+        public List<ContactRequest> Index(string user)
         {
             //TODO: return not found exception if not exist
             return _contactService.GetAll(user);
         }
         [HttpGet("{id}")]
-        // GET: ContactController/Details/5 
-        public Contact Details(string user, string id)
+        // GET: contactsController/Details/5 
+        public ContactRequest Details(string user, string id)
         {
             return _contactService.Get(user, id);
         }
-        // POST: ContactController/Create
+        // POST: contactsController/Create
         [HttpPost]
         public void Create(string user, [Bind("Id, Name, Server")]Contact contact)
         { 
@@ -41,7 +41,7 @@ namespace ChatServer.Controllers
             _contactService.Create(user, contact);
         }
         [HttpPut("{contactId}")]
-        //put: ContactController/Edit/5
+        //put: contactsController/Edit/5
         public void Edit(string user, string contactId, [FromBody] JsonObject content)
         {
             _contactService.Edit(user, contactId, content);

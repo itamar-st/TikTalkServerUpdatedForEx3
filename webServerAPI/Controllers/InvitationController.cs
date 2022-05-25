@@ -7,15 +7,15 @@ namespace webServerAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InvitationController : ControllerBase
+public class invitationController : ControllerBase
 {
     private static InvitationService _invitationService;
 
-    public InvitationController()
+    public invitationController()
     {
         _invitationService = new InvitationService();
     }
-    // POST api/<InvitationController>
+    // POST api/<invitationController>
     [HttpPost]
     public void Post([Bind("From, To, Server")] Invitation invitation)
     {

@@ -8,15 +8,15 @@ namespace webServerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransferController : ControllerBase
+    public class transferController : ControllerBase
     {
         private static TransferService _transferService;
 
-        public TransferController()
+        public transferController()
         {
             _transferService = new TransferService();
         }
-        // POST api/<TransferController>
+        // POST api/<transferController>
         [HttpPost]
         public void Post([Bind("From, To, Content")] Transfer transfer)
         {

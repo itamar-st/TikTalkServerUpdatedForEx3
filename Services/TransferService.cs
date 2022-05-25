@@ -17,7 +17,7 @@ namespace Services
             JsonObject contentJson = new JsonObject();
             contentJson.Add("content", transfer.Content);
             // false because we got the message
-            messageService.Create(transfer.From, transfer.To, contentJson, false);
+            messageService.Create(transfer.To, transfer.From, contentJson, false);
         }
     }
 }
