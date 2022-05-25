@@ -17,7 +17,6 @@ namespace ChatServer.Controllers
         {
             _messageService = new MessageService();
         }
-        //{id}/Messages/{id2}/{LoggedUser}
         [HttpGet("{contactId}/messages")]
         public List<Message> Index(string user, string contactId)
         {
@@ -25,7 +24,6 @@ namespace ChatServer.Controllers
         }
 
         [HttpGet("{contactId}/messages/{msgId}")]
-        //[Route("api/contacts/{contactId}/messages/{msgId}")]
 
         // GET: messagesController/Details/5
         public Message Details(string user, string contactId, int msgId)
