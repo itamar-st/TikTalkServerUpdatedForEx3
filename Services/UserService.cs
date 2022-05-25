@@ -46,7 +46,11 @@ namespace Services
         // GET: api/<UsersController>
         public IEnumerable<User> Get()
         {
-            return _users;
+            try
+            {
+                return _users;
+            }
+            catch { return null; }
         }
 
 
@@ -54,16 +58,25 @@ namespace Services
         // GET api/<UsersController>/5
         public User Get(string id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            try
+            {
+                return _users.FirstOrDefault(x => x.Id == id);
+            }
+            catch { return null; }
         }
 
 
         // add user
         // POST api/<UsersController>
         //public void Post([FromBody] User user)
-        public void Post(User user)
+        public bool Post(User user)
         {
-            _users.Add(user);
+            try
+            {
+                _users.Add(user);
+                return true;
+            }
+            catch { return false; }
         }
 
 
@@ -77,9 +90,14 @@ namespace Services
 
         // delete user
         // DELETE api/<UsersController>/5
-        public void Delete(string id)
+        public bool Delete(string id)
         {
-            _users.Remove( _users.Where(x => x.Id == id).First() );
+            try
+            {
+                _users.Remove(_users.Where(x => x.Id == id).First());
+                return true;
+            }
+            catch { return false; }
         }
     }
 }

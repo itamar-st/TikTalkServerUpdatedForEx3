@@ -21,9 +21,12 @@ namespace Controllers
         // get all users
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IActionResult Get()
         {
-            return service.Get();
+            IEnumerable<User> users = service.Get();
+            if(users == null) return NotFound();
+
+            return Ok(users);
         }
 
 
@@ -34,6 +37,7 @@ namespace Controllers
         {
             var user = service.Get(id);
             if(user == null) return NotFound();
+
             return Ok(user);
         }
 
@@ -41,18 +45,26 @@ namespace Controllers
         // add user
         // POST api/<UsersController>
         [HttpPost]
-        public void Post([FromBody] User user)
+        public IActionResult Post([FromBody] User user)
         {
-            service.Post(user);
+            if(service.Post(user) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
 
 
         // delete user
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
-            service.Delete(id);
+            if(service.Delete(id) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
 
     }

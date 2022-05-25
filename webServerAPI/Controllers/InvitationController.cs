@@ -17,8 +17,12 @@ public class invitationsController : ControllerBase
     }
     // POST api/<invitationController>
     [HttpPost]
-    public void Post([Bind("From, To, Server")] Invitation invitation)
+    public IActionResult Post([Bind("From, To, Server")] Invitation invitation)
     {
-        _invitationService.SendInvitation(invitation);
+        if(_invitationService.SendInvitation(invitation) == false)
+        {
+            return BadRequest();
+        }
+        return NoContent();
     }
 }

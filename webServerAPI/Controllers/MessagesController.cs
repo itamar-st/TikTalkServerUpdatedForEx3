@@ -18,17 +18,27 @@ namespace ChatServer.Controllers
             _messageService = new MessageService();
         }
         [HttpGet("{contactId}/messages")]
-        public List<Message> Index(string user, string contactId)
+        public IActionResult Index(string user, string contactId)
         {
-            return _messageService.GetAll(user, contactId);
+            List<Message> messages = _messageService.GetAll(user, contactId);
+            if(messages == null)
+            {
+                return BadRequest();
+            }
+            return Ok(messages);
         }
 
         [HttpGet("{contactId}/messages/{msgId}")]
 
         // GET: messagesController/Details/5
-        public Message Details(string user, string contactId, int msgId)
+        public IActionResult Details(string user, string contactId, int msgId)
         {
-            return _messageService.Get(user, contactId, msgId);
+            Message message = _messageService.Get(user, contactId, msgId);
+            if (message == null)
+            {
+                return NotFound();
+            }
+            return Ok(message);
         }
 
         // POST: messagesController/Create
@@ -36,22 +46,35 @@ namespace ChatServer.Controllers
         //[Route("api/contacts/{contactId}/messages")]
 
         //[ValidateAntiForgeryToken]
-        public void Create(string user, string contactId, [FromBody] JsonObject content)
+        public IActionResult Create(string user, string contactId, [FromBody] JsonObject content)
         {
             // true because i sent the message
-             _messageService.Create(user, contactId, content, true);
+             if(_messageService.Create(user, contactId, content, true) == false)
+            {
+                return BadRequest();
+            }
+            return Created("api/contacts/{contactId}/messages", "");
 
         }
         [HttpPut("{contactId}/messages/{msgId}")]
         //GET: messagesController/Edit/5
-        public void Edit(string user, string contactId, int msgId, [FromBody] JsonObject content)
+        public IActionResult Edit(string user, string contactId, int msgId, [FromBody] JsonObject content)
         {
-            _messageService.Edit(user, contactId, msgId, content);
+            if (_messageService.Edit(user, contactId, msgId, content) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
         [HttpDelete("{contactId}/messages/{msgId}")]
-        public void Delete(string user, string contactId, int msgId)
+        public IActionResult Delete(string user, string contactId, int msgId)
         {
-            _messageService.Delete(user, contactId, msgId);
+            if(_messageService.Delete(user, contactId, msgId) == false)
+            {
+                return BadRequest();
+            }
+            
+            return NoContent();
         }
     }
 }
