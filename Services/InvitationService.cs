@@ -14,6 +14,7 @@ namespace Services
         {
             Contact contact = new Contact();
             contact.Id = invitation.From;
+            contact.Name = invitation.From;
             contact.Server = invitation.Server;
             contactService.Create(invitation.To, contact);
         }

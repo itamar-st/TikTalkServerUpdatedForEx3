@@ -10,7 +10,6 @@ namespace Services
 {
     public class MessageService
     {
-        public static List<Message> messages = new List<Message>();
         UserService userService = new UserService();
 
         public List<Message> GetAll(string user, string contactId)
