@@ -60,13 +60,20 @@ namespace ChatServer.Controllers
         //GET: messagesController/Edit/5
         public IActionResult Edit(string user, string contactId, int msgId, [FromBody] JsonObject content)
         {
-            _messageService.Edit(user, contactId, msgId, content);
+            if (_messageService.Edit(user, contactId, msgId, content) == false)
+            {
+                return BadRequest();
+            }
             return NoContent();
         }
         [HttpDelete("{contactId}/messages/{msgId}")]
         public IActionResult Delete(string user, string contactId, int msgId)
         {
-            _messageService.Delete(user, contactId, msgId);
+            if(_messageService.Delete(user, contactId, msgId) == false)
+            {
+                return BadRequest();
+            }
+            
             return NoContent();
         }
     }

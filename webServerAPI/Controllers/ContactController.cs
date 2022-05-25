@@ -29,7 +29,7 @@ namespace ChatServer.Controllers
             {
                 return BadRequest();
             }
-            return Ok(_contactService.GetAll(user));
+            return Ok(contacts);
         }
         [HttpGet("{contactId}")]
         // GET: api/contacts/{id} 

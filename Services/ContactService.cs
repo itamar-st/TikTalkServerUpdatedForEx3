@@ -10,36 +10,40 @@ namespace Services
         UserService userService = new UserService();
         public List<ContactRequest> GetAll(string user)
         {
-            User currntUser;
-            if ((currntUser = userService.Get(user)) == null) { return null; }
-
-            List<Contact> usersContacts = currntUser.Contacts;
-            List<ContactRequest> contactsForSending = new List<ContactRequest>();
-            foreach(Contact contact in usersContacts)
+            try
             {
-                ContactRequest contactRequest = new ContactRequest()
+                User currntUser = userService.Get(user);
+
+                List<Contact> usersContacts = currntUser.Contacts;
+                List<ContactRequest> contactsForSending = new List<ContactRequest>();
+                foreach (Contact contact in usersContacts)
                 {
-                    Id = contact.Id,
-                    Name = contact.Name,
-                    Last = contact.Last,
-                    Lastdate = contact.Lastdate,
-                    Server = contact.Server
-                };
-                 contactsForSending.Add(contactRequest);
+                    ContactRequest contactRequest = new ContactRequest()
+                    {
+                        Id = contact.Id,
+                        Name = contact.Name,
+                        Last = contact.Last,
+                        Lastdate = contact.Lastdate,
+                        Server = contact.Server
+                    };
+                    contactsForSending.Add(contactRequest);
+                }
+                return contactsForSending;
             }
-            return contactsForSending;
+            catch { return null; }
 
         }
 
         public ContactRequest Get(string user, string contactId)
         {
-            User currntUser;
-            if ((currntUser = userService.Get(user)) == null) {return null;}
+            try
+            {
+                User currntUser = userService.Get(user);
 
-            Contact currentContact;
-            if ((currentContact = currntUser.Contacts.Find(x => x.Id == contactId)) == null) { return null; }
-            
-            ContactRequest contactRequest = new ContactRequest()
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+
+
+                ContactRequest contactRequest = new ContactRequest()
                 {
                     Id = currentContact.Id,
                     Name = currentContact.Name,
@@ -47,39 +51,54 @@ namespace Services
                     Lastdate = currentContact.Lastdate,
                     Server = currentContact.Server
                 };
-            return contactRequest;
+                return contactRequest;
+            }
+            catch { return null; }
+
+
             }
 
         public bool Create(string user, Contact contact)
         {
-            User currntUser;
-            if ((currntUser = userService.Get(user)) == null) { return false; }
+            try
+            {
+                User currntUser = userService.Get(user);
 
-            currntUser.Contacts.Add(contact);
-            return true;
+                currntUser.Contacts.Add(contact);
+                return true;
+            }
+            catch { return false; }
+
         }
 
         public bool Edit(string user, string contactId, JsonObject content)
         {
-            //TODO: check if field actualy exists in JSON obj
-            User currntUser;
-            if ((currntUser = userService.Get(user)) == null) { return false; }
+            try
+            {
+                //TODO: check if field actualy exists in JSON obj
+                User currntUser = userService.Get(user);
 
-            Contact currentContact;
-            if ((currentContact = currntUser.Contacts.Find(x => x.Id == contactId)) == null) { return false; }
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
 
-            currentContact.Name = content["name"].ToString();
-            currentContact.Server = content["server"].ToString();
-            return true;
+
+                currentContact.Name = content["name"].ToString();
+                currentContact.Server = content["server"].ToString();
+                return true;
+            }
+            catch { return false; }
         }
 
         public bool Delete(string user, string id)
         {
-            User currntUser;
-            if ((currntUser = userService.Get(user)) == null) { return false; }
-            // TODO: deleting a contact that doesent exists - send error?
-            currntUser.Contacts.RemoveAll(x => x.Id == id);
-            return true;
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                // TODO: deleting a contact that doesent exists - send error?
+                currntUser.Contacts.RemoveAll(x => x.Id == id);
+                return true;
+            }
+            catch { return false; }
 
         }
     }
