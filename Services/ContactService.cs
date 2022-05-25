@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using Domain;
 using Services;
 
@@ -14,7 +10,9 @@ namespace Services
         UserService userService = new UserService();
         public List<ContactRequest> GetAll(string user)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return null; }
+
             List<Contact> usersContacts = currntUser.Contacts;
             List<ContactRequest> contactsForSending = new List<ContactRequest>();
             foreach(Contact contact in usersContacts)
@@ -35,39 +33,54 @@ namespace Services
 
         public ContactRequest Get(string user, string contactId)
         {
-            User currntUser = userService.Get(user);
-            Contact userContact = currntUser.Contacts.Find(x => x.Id == contactId);
-                ContactRequest contactRequest = new ContactRequest()
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) {return null;}
+
+            Contact currentContact;
+            if ((currentContact = currntUser.Contacts.Find(x => x.Id == contactId)) == null) { return null; }
+            
+            ContactRequest contactRequest = new ContactRequest()
                 {
-                    Id = userContact.Id,
-                    Name = userContact.Name,
-                    Last = userContact.Last,
-                    Lastdate = userContact.Lastdate,
-                    Server = userContact.Server
+                    Id = currentContact.Id,
+                    Name = currentContact.Name,
+                    Last = currentContact.Last,
+                    Lastdate = currentContact.Lastdate,
+                    Server = currentContact.Server
                 };
             return contactRequest;
             }
 
-        public void Create(string user, Contact contact)
+        public bool Create(string user, Contact contact)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
 
             currntUser.Contacts.Add(contact);
+            return true;
         }
 
-        public void Edit(string user, string contactId, JsonObject content)
+        public bool Edit(string user, string contactId, JsonObject content)
         {
             //TODO: check if field actualy exists in JSON obj
-            User currntUser = userService.Get(user);
-            Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
+
+            Contact currentContact;
+            if ((currentContact = currntUser.Contacts.Find(x => x.Id == contactId)) == null) { return false; }
+
             currentContact.Name = content["name"].ToString();
             currentContact.Server = content["server"].ToString();
+            return true;
         }
 
-        public void Delete(string user, string id)
+        public bool Delete(string user, string id)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
+            // TODO: deleting a contact that doesent exists - send error?
             currntUser.Contacts.RemoveAll(x => x.Id == id);
+            return true;
+
         }
     }
 }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Nodes;
 using Domain;
-using Services;
 namespace Services
 {
     public class MessageService
@@ -14,26 +8,38 @@ namespace Services
 
         public List<Message> GetAll(string user, string contactId)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return null; }
+
             List<Contact> contacts = currntUser.Contacts;
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
+            Contact currentContact;
+            if((currentContact = contacts.Find(x => x.Id == contactId)) == null) { return null; }
+
             return currentContact.ChatWithContact;
         }
 
         public Message Get(string user, string contactId, int msgId)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return null; }
+
             List<Contact> contacts = currntUser.Contacts;
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
+            Contact currentContact;
+            if ((currentContact = contacts.Find(x => x.Id == contactId)) == null) { return null; }
+
             return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
-        public void Create(string user, string contactId, JsonObject content, bool fromTransfer)
+        public bool Create(string user, string contactId, JsonObject content, bool fromTransfer)
         {
             int nextid;
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
+
             List<Contact> contacts = currntUser.Contacts;
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
-            if(currentContact.ChatWithContact.Count == 0)
+            Contact currentContact;
+            if ((currentContact = contacts.Find(x => x.Id == contactId)) == null) { return false; }
+
+            if (currentContact.ChatWithContact.Count == 0)
             {
                 nextid = 0;
             }
@@ -49,23 +55,35 @@ namespace Services
                 Content = content["content"].ToString(),
                 Sent = fromTransfer
             });
+            return true;
             }
 
 
-        public void Edit(string user, string contactId, int msgId, JsonObject content)
+        public bool Edit(string user, string contactId, int msgId, JsonObject content)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
+
             List<Contact> contacts = currntUser.Contacts;
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
+            Contact currentContact;
+            if ((currentContact = contacts.Find(x => x.Id == contactId)) == null) { return false; }
+
             Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
             currentMessage.Content = content["content"].ToString();
+            return true;
         }
-        public void Delete(string user, string contactId, int msgId)
+        public bool Delete(string user, string contactId, int msgId)
         {
-            User currntUser = userService.Get(user);
+            User currntUser;
+            if ((currntUser = userService.Get(user)) == null) { return false; }
+
             List<Contact> contacts = currntUser.Contacts;
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
+            Contact currentContact;
+            if ((currentContact = contacts.Find(x => x.Id == contactId)) == null) { return false; }
+
+            // TODO: deleting a message that doesent exists - send error?
             currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
+            return true;
         }
     }
 }
