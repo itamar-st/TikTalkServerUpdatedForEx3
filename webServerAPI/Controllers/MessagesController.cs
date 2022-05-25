@@ -7,7 +7,7 @@ using System.Text.Json.Nodes;
 namespace ChatServer.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/contacts")]
     //TODO: add response code?
     public class messagesController : ControllerBase
     {
@@ -17,15 +17,13 @@ namespace ChatServer.Controllers
         {
             _messageService = new MessageService();
         }
-
-        [HttpGet("{contactId}")]
+        [HttpGet("{contactId}/messages")]
         public List<Message> Index(string user, string contactId)
         {
             return _messageService.GetAll(user, contactId);
         }
 
-        [HttpGet("{contactId}/{msgId}")]
-        //[Route("api/contacts/{contactId}/messages/{msgId}")]
+        [HttpGet("{contactId}/messages/{msgId}")]
 
         // GET: messagesController/Details/5
         public Message Details(string user, string contactId, int msgId)
@@ -34,7 +32,7 @@ namespace ChatServer.Controllers
         }
 
         // POST: messagesController/Create
-        [HttpPost("{contactId}")]
+        [HttpPost("{contactId}/messages")]
         //[Route("api/contacts/{contactId}/messages")]
 
         //[ValidateAntiForgeryToken]
@@ -44,13 +42,13 @@ namespace ChatServer.Controllers
              _messageService.Create(user, contactId, content, true);
 
         }
-        [HttpPut("{contactId}/{msgId}")]
+        [HttpPut("{contactId}/messages/{msgId}")]
         //GET: messagesController/Edit/5
         public void Edit(string user, string contactId, int msgId, [FromBody] JsonObject content)
         {
             _messageService.Edit(user, contactId, msgId, content);
         }
-        [HttpDelete("{contactId}/{msgId}")]
+        [HttpDelete("{contactId}/messages/{msgId}")]
         public void Delete(string user, string contactId, int msgId)
         {
             _messageService.Delete(user, contactId, msgId);

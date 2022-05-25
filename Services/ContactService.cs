@@ -11,7 +11,6 @@ namespace Services
 {
     public class ContactService
     {
-        public static List<Contact> contacts = new List<Contact>();
         UserService userService = new UserService();
         public List<ContactRequest> GetAll(string user)
         {
@@ -67,7 +66,8 @@ namespace Services
 
         public void Delete(string user, string id)
         {
-            contacts.RemoveAll(x => x.Id == id);
+            User currntUser = userService.Get(user);
+            currntUser.Contacts.RemoveAll(x => x.Id == id);
         }
     }
 }
