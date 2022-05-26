@@ -11,18 +11,6 @@ namespace Services
                                                                             Password = "12345678Aa",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
-                                                                            {
-                                                                                new Contact() {
-                                                                                    Id = "Tweety",
-                                                                                    Name = "Tweety",
-                                                                                    Last = "hi",
-                                                                                    Lastdate = "5.5.5",
-                                                                                    Server = "123",
-                                                                                    ChatWithContact = new List<Message> { }
-
-                                                                                }
-
-                                                                            }
                                                                         } ,
 
                                                                         new User()
