@@ -71,21 +71,13 @@ namespace Services
             }
 
 
-        public bool Edit(string user, string contactId, int msgId, JsonObject content)
+        public void Edit(string user, string contactId, int msgId, JsonObject content)
         {
-            try
-            {
-                User currntUser = userService.Get(user);
-
-                List<Contact> contacts = currntUser.Contacts;
-                Contact currentContact = contacts.Find(x => x.Id == contactId);
-
-                Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
-                currentMessage.Content = content["content"].ToString();
-                return true;
-            }
-            catch { return false; }
-
+            User currntUser = userService.Get(user);
+            List<Contact> contacts = currntUser.Contacts;
+            Contact currentContact = contacts.Find(x => x.Id == contactId);
+            Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
+            currentMessage.Content = content["content"].ToString();
         }
         public bool Delete(string user, string contactId, int msgId)
         {
