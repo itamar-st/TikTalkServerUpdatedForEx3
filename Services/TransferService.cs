@@ -8,7 +8,7 @@ using Domain;
 
 namespace Services
 {
-    public class TransferService
+    public class TransferService : ITransferService
     {
         MessageService messageService = new MessageService();
         ContactService contactService = new ContactService();

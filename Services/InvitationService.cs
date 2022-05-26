@@ -1,7 +1,7 @@
 ﻿using Domain;
 namespace Services
 {
-    public class InvitationService
+    public class InvitationService : IInvitationService
     {
         ContactService contactService = new ContactService();
         public bool SendInvitation(Invitation invitation)
