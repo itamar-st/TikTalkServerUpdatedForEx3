@@ -12,7 +12,7 @@ public class User
     public string ProfilePic { get; set; }
     [Required]
     public string Password { get; set; }
-    public List<Contact> Contacts { get; set; }
+    public List<Contact> Contacts { get; set; } = new List<Contact>();
 
 
 }

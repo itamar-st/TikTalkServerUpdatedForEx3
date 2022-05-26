@@ -13,7 +13,6 @@ namespace Services
         MessageService messageService = new MessageService();
        public void SendMessage(Transfer transfer)
         {
-            Contact currentContact = new Contact();
             JsonObject contentJson = new JsonObject();
             contentJson.Add("content", transfer.Content);
             // false because we got the message

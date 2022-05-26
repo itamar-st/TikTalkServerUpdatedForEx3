@@ -27,7 +27,7 @@ namespace Services
             Contact currentContact = contacts.Find(x => x.Id == contactId);
             return currentContact.ChatWithContact.Find(x => x.Id == msgId);
         }
-        public void Create(string user, string contactId, JsonObject content, bool fromTransfer)
+        public void Create(string user, string contactId, JsonObject content, bool sentByMe)
         {
             int nextid;
             User currntUser = userService.Get(user);
@@ -47,10 +47,9 @@ namespace Services
                 Id = nextid,
                 Created = DateTime.Now.ToString(),
                 Content = content["content"].ToString(),
-                Sent = fromTransfer
+                Sent = sentByMe
             });
             }
-
 
         public void Edit(string user, string contactId, int msgId, JsonObject content)
         {

@@ -6,7 +6,6 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Domain;
 using Services;
-
 namespace Services
 {
     public class ContactService
@@ -51,8 +50,13 @@ namespace Services
         public void Create(string user, Contact contact)
         {
             User currntUser = userService.Get(user);
-
-            currntUser.Contacts.Add(contact);
+            Contact newContact = new Contact()
+            {
+                Id = contact.Id,
+                Name = contact.Name,
+                Server = contact.Server
+            };
+            currntUser.Contacts.Add(newContact);
         }
 
         public void Edit(string user, string contactId, JsonObject content)
