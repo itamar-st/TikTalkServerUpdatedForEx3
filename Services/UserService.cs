@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public class UserService : InterfaceUsersService
+    public class UserService : IUsersService
     {
         private static ICollection<User> _users = new List<User>() {
                                                                         new User() { 

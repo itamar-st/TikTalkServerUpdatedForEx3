@@ -2,7 +2,7 @@
 using Domain;
 namespace Services
 {
-    public class MessageService
+    public class MessageService : IMessageService
     {
         UserService userService = new UserService();
         ContactService contactService = new ContactService();
