@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public interface InterfaceUsersService
+    public interface IUsersService
     {
         // GET: api/<UsersController>
         public IEnumerable<User> Get();

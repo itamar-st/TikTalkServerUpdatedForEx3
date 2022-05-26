@@ -10,7 +10,7 @@ namespace Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private InterfaceUsersService service;
+        private IUsersService service;
 
         public UserController()
         {

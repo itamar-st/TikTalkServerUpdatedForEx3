@@ -5,7 +5,7 @@ using Services;
 
 namespace Services
 {
-    public class ContactService
+    public class ContactService : IContactService
     {
         UserService userService = new UserService();
         public List<ContactRequest> GetAll(string user)
