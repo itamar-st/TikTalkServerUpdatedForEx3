@@ -21,35 +21,56 @@ namespace ChatServer.Controllers
             _invitationService = new InvitationService();
         }
         [HttpGet]
-        // GET: contactsController
-        public List<ContactRequest> Index(string user)
+        // GET: /contacts
+        public IActionResult Index(string user)
         {
-            //TODO: return not found exception if not exist
-            return _contactService.GetAll(user);
+            List<ContactRequest> contacts = _contactService.GetAll(user);
+            if (contacts == null)
+            {
+                return BadRequest();
+            }
+            return Ok(contacts);
         }
-        [HttpGet("{id}")]
-        // GET: contactsController/Details/5 
-        public ContactRequest Details(string user, string id)
+        [HttpGet("{contactId}")]
+        // GET: api/contacts/{id} 
+        public IActionResult Details(string user, string contactId)
         {
-            return _contactService.Get(user, id);
+            ContactRequest contact = _contactService.Get(user, contactId);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return Ok(contact);
         }
-        // POST: contactsController/Create
+        // POST: api/contacts
         [HttpPost]
-        public void Create(string user, [Bind("Id, Name, Server")]Contact contact)
+        public IActionResult Create(string user, [Bind("Id, Name, Server")]Contact contact)
         { 
-            //TODO: check how to get multiple args as json
-            _contactService.Create(user, contact);
+            if(_contactService.Create(user, contact) == false)
+            {
+                return BadRequest();
+            }
+            return Created("api/contacts", "");
         }
         [HttpPut("{contactId}")]
-        //put: contactsController/Edit/5
-        public void Edit(string user, string contactId, [FromBody] JsonObject content)
+        //PUT: api/contacts/{id}
+        public IActionResult Edit(string user, string contactId, [FromBody] JsonObject content)
         {
-            _contactService.Edit(user, contactId, content);
+            if (_contactService.Edit(user, contactId, content) == false) {
+                return BadRequest();
+            }
+            return NoContent();
+
         }
         [HttpDelete("{contactId}")]
-        public void Delete(string user, string contactId)
+        // DELETE: api/contacts/{id}
+        public IActionResult Delete(string user, string contactId)
         {
-            _contactService.Delete(user, contactId);
+            if(_contactService.Delete(user, contactId) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
     }
 }

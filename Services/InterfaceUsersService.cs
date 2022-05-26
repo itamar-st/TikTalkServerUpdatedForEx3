@@ -12,14 +12,14 @@ namespace Services
 
         // POST api/<UsersController>
         //public void Post([FromBody] User user);
-        public void Post(User user);
+        public bool Post(User user);
 
         // PUT api/<UsersController>/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value);
 
         // DELETE api/<UsersController>/5
-        public void Delete(string id);
+        public bool Delete(string id);
     }
 
 

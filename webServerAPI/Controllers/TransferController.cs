@@ -16,11 +16,16 @@ namespace webServerAPI.Controllers
         {
             _transferService = new TransferService();
         }
-        // POST api/<transferController>
+        // POST api/transfer
         [HttpPost]
-        public void Post([Bind("From, To, Content")] Transfer transfer)
+        public IActionResult Post([Bind("From, To, Content")] Transfer transfer)
         {
-            _transferService.SendMessage(transfer);
+            if (_transferService.SendMessage(transfer) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+            
         }
     }
 }

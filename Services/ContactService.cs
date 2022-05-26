@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using Domain;
 using Services;
 namespace Services
@@ -13,65 +9,107 @@ namespace Services
         UserService userService = new UserService();
         public List<ContactRequest> GetAll(string user)
         {
-            User currntUser = userService.Get(user);
-            List<Contact> usersContacts = currntUser.Contacts;
-            List<ContactRequest> contactsForSending = new List<ContactRequest>();
-            foreach(Contact contact in usersContacts)
+            try
             {
-                ContactRequest contactRequest = new ContactRequest()
+                User currntUser = userService.Get(user);
+
+                List<Contact> usersContacts = currntUser.Contacts;
+                List<ContactRequest> contactsForSending = new List<ContactRequest>();
+                foreach (Contact contact in usersContacts)
                 {
-                    Id = contact.Id,
-                    Name = contact.Name,
-                    Last = contact.Last,
-                    Lastdate = contact.Lastdate,
-                    Server = contact.Server
-                };
-                 contactsForSending.Add(contactRequest);
+                    ContactRequest contactRequest = new ContactRequest()
+                    {
+                        Id = contact.Id,
+                        Name = contact.Name,
+                        Last = contact.Last,
+                        Lastdate = contact.Lastdate,
+                        Server = contact.Server
+                    };
+                    contactsForSending.Add(contactRequest);
+                }
+                return contactsForSending;
             }
-            return contactsForSending;
+            catch { return null; }
 
         }
 
         public ContactRequest Get(string user, string contactId)
         {
-            User currntUser = userService.Get(user);
-            Contact userContact = currntUser.Contacts.Find(x => x.Id == contactId);
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+
+
                 ContactRequest contactRequest = new ContactRequest()
                 {
-                    Id = userContact.Id,
-                    Name = userContact.Name,
-                    Last = userContact.Last,
-                    Lastdate = userContact.Lastdate,
-                    Server = userContact.Server
+                    Id = currentContact.Id,
+                    Name = currentContact.Name,
+                    Last = currentContact.Last,
+                    Lastdate = currentContact.Lastdate,
+                    Server = currentContact.Server
                 };
-            return contactRequest;
+                return contactRequest;
+            }
+            catch { return null; }
+
+
             }
 
-        public void Create(string user, Contact contact)
+        public bool Create(string user, Contact contact)
         {
-            User currntUser = userService.Get(user);
-            Contact newContact = new Contact()
+            try
             {
-                Id = contact.Id,
-                Name = contact.Name,
-                Server = contact.Server
-            };
-            currntUser.Contacts.Add(newContact);
+                User currntUser = userService.Get(user);
+
+                currntUser.Contacts.Add(contact);
+                return true;
+            }
+            catch { return false; }
+
         }
 
-        public void Edit(string user, string contactId, JsonObject content)
+        public bool Edit(string user, string contactId, JsonObject content)
         {
-            //TODO: check if field actualy exists in JSON obj
-            User currntUser = userService.Get(user);
-            Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
-            currentContact.Name = content["name"].ToString();
-            currentContact.Server = content["server"].ToString();
-        }
+            try
+            {
+                User currntUser = userService.Get(user);
 
-        public void Delete(string user, string id)
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+
+
+                currentContact.Name = content["name"].ToString();
+                currentContact.Server = content["server"].ToString();
+                return true;
+            }
+            catch { return false; }
+        }
+        public bool EditLastMsg(string user, string contactId, string last, string lastDate)
         {
-            User currntUser = userService.Get(user);
-            currntUser.Contacts.RemoveAll(x => x.Id == id);
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+                currentContact.Last = last;
+                currentContact.Lastdate = lastDate;
+                return true;
+            }
+            catch { return false; }
+        }
+        public bool Delete(string user, string id)
+        {
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                // TODO: deleting a contact that doesent exists - send error?
+                currntUser.Contacts.RemoveAll(x => x.Id == id);
+                return true;
+            }
+            catch { return false; }
+
         }
     }
 }
