@@ -13,31 +13,34 @@ namespace Services
             {
                 User currntUser = userService.Get(user);
 
-
+                // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
 
 
                 return currentContact.ChatWithContact;
             }
+            // if not exists or an error occurde 
             catch { return null; }
         }
-
         public Message Get(string user, string contactId, int msgId)
         {
             try
             {
                 User currntUser = userService.Get(user);
 
+                // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
 
 
                 return currentContact.ChatWithContact.Find(x => x.Id == msgId);
             }
+            // if not exists or an error occurde 
             catch { return null; }
 
         }
+
         public bool Create(string user, string contactId, JsonObject content, bool fromTransfer)
         {
             try
@@ -45,9 +48,10 @@ namespace Services
                 int nextid;
                 User currntUser = currntUser = userService.Get(user);
 
+                // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
-
+                //give the msg an id
                 if (currentContact.ChatWithContact.Count == 0)
                 {
                     nextid = 0;
@@ -56,6 +60,7 @@ namespace Services
                 {
                     nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
                 }
+                //create the message
                 Message message = new Message()
                 {
                     Id = nextid,
@@ -63,27 +68,29 @@ namespace Services
                     Content = content["content"].ToString(),
                     Sent = fromTransfer
                 };
+                //push to the DB
                 currentContact.ChatWithContact.Add(message);
                 contactService.EditLastMsg(user, contactId, message.Content, message.Created);
                 return true;
             }
+            // if not exists or an error occurde 
             catch { return false; }
             }
-
 
         public bool Edit(string user, string contactId, int msgId, JsonObject content)
         {
             try
             {
                 User currntUser = userService.Get(user);
-
+                // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
-
+                // get the msg from the the conversation and change the content
                 Message currentMessage = currentContact.ChatWithContact.Find(y => y.Id == msgId);
                 currentMessage.Content = content["content"].ToString();
                 return true;
             }
+            // if not exists or an error occurde 
             catch { return false; }
 
         }
@@ -93,6 +100,7 @@ namespace Services
             {
                 User currntUser = userService.Get(user);
 
+                // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
 
@@ -100,6 +108,7 @@ namespace Services
                 currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
                 return true;
             }
+            // if not exists or an error occurde 
             catch { return false; }
 
         }

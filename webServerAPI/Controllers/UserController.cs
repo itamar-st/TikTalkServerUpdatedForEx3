@@ -8,13 +8,14 @@ namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //controller for the User model
     public class UserController : ControllerBase
     {
-        private IUsersService service;
+        private IUsersService _userService;
 
         public UserController()
         {
-            this.service = new UserService();
+            this._userService = new UserService();
         }
 
 
@@ -23,7 +24,7 @@ namespace Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<User> users = service.Get();
+            IEnumerable<User> users = _userService.Get();
             if(users == null) return NotFound();
 
             return Ok(users);
@@ -35,7 +36,7 @@ namespace Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var user = service.Get(id);
+            var user = _userService.Get(id);
             if(user == null) return NotFound();
 
             return Ok(user);
@@ -47,7 +48,7 @@ namespace Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-            if(service.Post(user) == false)
+            if(_userService.Post(user) == false)
             {
                 return BadRequest();
             }
@@ -60,7 +61,7 @@ namespace Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            if(service.Delete(id) == false)
+            if(_userService.Delete(id) == false)
             {
                 return BadRequest();
             }

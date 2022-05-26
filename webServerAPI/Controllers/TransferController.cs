@@ -8,19 +8,22 @@ namespace webServerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //controller for the Transfer model
+
     public class transferController : ControllerBase
     {
-        private static TransferService _transferService;
+        private static ITransferService _transferService;
 
         public transferController()
         {
             _transferService = new TransferService();
         }
         // POST api/transfer
+        //activated when the user recieves a message from other users
         [HttpPost]
         public IActionResult Post([Bind("From, To, Content")] Transfer transfer)
         {
-            if (_transferService.SendMessage(transfer) == false)
+            if (_transferService.onMessageArrival(transfer) == false)
             {
                 return BadRequest();
             }

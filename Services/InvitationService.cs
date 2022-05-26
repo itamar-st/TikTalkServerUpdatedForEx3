@@ -8,6 +8,7 @@ namespace Services
         {
             try
             {
+                //create a new contact acording to the info from invitation
                 Contact contact = new Contact();
                 contact.Id = invitation.From;
                 contact.Name = invitation.From;

@@ -12,11 +12,11 @@ namespace Services
     {
         MessageService messageService = new MessageService();
         ContactService contactService = new ContactService();
-       public bool SendMessage(Transfer transfer)
+       public bool onMessageArrival(Transfer transfer)
         {
             try
             {
-                Contact currentContact = new Contact();
+                // add a message to the chat with the contact ( from )
                 JsonObject contentJson = new JsonObject();
                 contentJson.Add("content", transfer.Content);
                 // false because we got the message

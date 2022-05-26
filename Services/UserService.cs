@@ -4,6 +4,7 @@ namespace Services
 {
     public class UserService : IUsersService
     {
+        //hardcoded list to represent the DB
         private static ICollection<User> _users = new List<User>() {
                                                                         new User() { 
                                                                             Id = "Emma",

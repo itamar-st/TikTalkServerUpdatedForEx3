@@ -15,6 +15,7 @@ namespace Services
 
                 List<Contact> usersContacts = currntUser.Contacts;
                 List<ContactRequest> contactsForSending = new List<ContactRequest>();
+                // convert contact to contactRequest
                 foreach (Contact contact in usersContacts)
                 {
                     ContactRequest contactRequest = new ContactRequest()
@@ -29,6 +30,7 @@ namespace Services
                 }
                 return contactsForSending;
             }
+            // if failed
             catch { return null; }
 
         }
@@ -41,7 +43,7 @@ namespace Services
 
                 Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
 
-
+                // convert contact to contactRequest
                 ContactRequest contactRequest = new ContactRequest()
                 {
                     Id = currentContact.Id,
@@ -62,7 +64,7 @@ namespace Services
             try
             {
                 User currntUser = userService.Get(user);
-
+                // add contact to currentUser contacts
                 currntUser.Contacts.Add(contact);
                 return true;
             }
@@ -75,10 +77,10 @@ namespace Services
             try
             {
                 User currntUser = userService.Get(user);
-
+                //get user contacts
                 Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
 
-
+                // edit the name and server
                 currentContact.Name = content["name"].ToString();
                 currentContact.Server = content["server"].ToString();
                 return true;
@@ -90,12 +92,13 @@ namespace Services
             try
             {
                 User currntUser = userService.Get(user);
-
+                //get the contact
                 Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
                 currentContact.Last = last;
                 currentContact.Lastdate = lastDate;
                 return true;
             }
+            // false if failed
             catch { return false; }
         }
         public bool Delete(string user, string id)
@@ -108,6 +111,7 @@ namespace Services
                 currntUser.Contacts.RemoveAll(x => x.Id == id);
                 return true;
             }
+            // false if failed
             catch { return false; }
 
         }

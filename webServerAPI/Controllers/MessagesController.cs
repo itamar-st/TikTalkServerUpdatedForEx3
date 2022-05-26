@@ -8,9 +8,11 @@ namespace ChatServer.Controllers
 {
     [ApiController]
     [Route("api/contacts")]
+    //controller for the Message model
+
     public class messagesController : ControllerBase
     {
-        private static MessageService _messageService;
+        private static IMessageService _messageService;
         public messagesController()
         {
             _messageService = new MessageService();

@@ -7,9 +7,11 @@ namespace webServerAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//controller for the Invitation model
+
 public class invitationsController : ControllerBase
 {
-    private static InvitationService _invitationService;
+    private static IInvitationService _invitationService;
 
     public invitationsController()
     {

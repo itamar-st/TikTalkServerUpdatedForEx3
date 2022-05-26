@@ -10,18 +10,17 @@ namespace ChatServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //controller for the Contact model
     public class contactsController : ControllerBase
     {
-        private static ContactService _contactService;
-        private static InvitationService _invitationService;
+        private static IContactService _contactService;
 
         public contactsController()
         {
             _contactService = new ContactService();
-            _invitationService = new InvitationService();
         }
         [HttpGet]
-        // GET: /contacts
+        // GET: api/contacts
         public IActionResult Index(string user)
         {
             List<ContactRequest> contacts = _contactService.GetAll(user);
