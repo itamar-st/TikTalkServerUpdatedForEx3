@@ -40,8 +40,7 @@ namespace Services
             catch { return null; }
 
         }
-
-        public bool Create(string user, string contactId, JsonObject content, bool fromTransfer)
+        public bool Create(string user, string contactId, JsonObject content, bool sentByMe)
         {
             try
             {
@@ -66,7 +65,7 @@ namespace Services
                     Id = nextid,
                     Created = DateTime.Now.ToString(),
                     Content = content["content"].ToString(),
-                    Sent = fromTransfer
+                    Sent = sentByMe
                 };
                 //push to the DB
                 currentContact.ChatWithContact.Add(message);

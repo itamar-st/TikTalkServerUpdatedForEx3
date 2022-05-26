@@ -13,8 +13,8 @@ namespace Services
                 contact.Id = invitation.From;
                 contact.Name = invitation.From;
                 contact.Server = invitation.Server;
-                contactService.Create(invitation.To, contact);
-                return true;
+                return contactService.Create(invitation.To, contact);
+                //return true;
             }
             catch
             {
