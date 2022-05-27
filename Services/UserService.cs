@@ -8,16 +8,16 @@ namespace Services
                                                                         new User() { 
                                                                             Id = "Emma",
                                                                             Name = "Grandma",
-                                                                            Password = "12345678Aa",
+                                                                            Password = "1",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
                                                                             {
                                                                                 new Contact() {
-                                                                                    Id = "Tweety",
-                                                                                    Name = "Tweety",
-                                                                                    Last = "hi",
+                                                                                    Id = "Itamar",
+                                                                                    Name = "ita",
+                                                                                    Last = "",
                                                                                     Lastdate = "5.5.5",
-                                                                                    Server = "123",
+                                                                                    Server = "localhost:5051",
                                                                                     ChatWithContact = new List<Message> { }
 
                                                                                 }
@@ -29,7 +29,7 @@ namespace Services
                                                                         {
                                                                             Id = "Gil",
                                                                             Name = "Gili", 
-                                                                            Password = "12345678Aa",
+                                                                            Password = "1",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
                                                                         },
