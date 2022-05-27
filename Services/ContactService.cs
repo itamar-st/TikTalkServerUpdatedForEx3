@@ -7,52 +7,26 @@ namespace Services
     public class ContactService : IContactService
     {
         UserService userService = new UserService();
-        public List<ContactRequest> GetAll(string user)
+        public List<Contact> GetAll(string user)
         {
             try
             {
+                // get current user
                 User currntUser = userService.Get(user);
-
-                List<Contact> usersContacts = currntUser.Contacts;
-                List<ContactRequest> contactsForSending = new List<ContactRequest>();
-                // convert contact to contactRequest
-                foreach (Contact contact in usersContacts)
-                {
-                    ContactRequest contactRequest = new ContactRequest()
-                    {
-                        Id = contact.Id,
-                        Name = contact.Name,
-                        Last = contact.Last,
-                        Lastdate = contact.Lastdate,
-                        Server = contact.Server
-                    };
-                    contactsForSending.Add(contactRequest);
-                }
-                return contactsForSending;
+                return currntUser.Contacts;
             }
             // if failed
             catch { return null; }
 
         }
 
-        public ContactRequest Get(string user, string contactId)
+        public Contact Get(string user, string contactId)
         {
             try
             {
+                //get current user
                 User currntUser = userService.Get(user);
-
-                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
-
-                // convert contact to contactRequest
-                ContactRequest contactRequest = new ContactRequest()
-                {
-                    Id = currentContact.Id,
-                    Name = currentContact.Name,
-                    Last = currentContact.Last,
-                    Lastdate = currentContact.Lastdate,
-                    Server = currentContact.Server
-                };
-                return contactRequest;
+                return currntUser.Contacts.Find(x => x.Id == contactId);
             }
             catch { return null; }
 
@@ -63,6 +37,7 @@ namespace Services
         {
             try
             {
+                //get current user
                 User currntUser = userService.Get(user);
                 // add contact to currentUser contacts
                 currntUser.Contacts.Add(contact);

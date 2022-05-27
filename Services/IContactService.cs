@@ -8,10 +8,10 @@ namespace Services
     public interface IContactService
     {
         // return a all the contacts of the user
-        public List<ContactRequest> GetAll(string user);
+        public List<Contact> GetAll(string user);
 
         // return the contactId in user's contact list
-        public ContactRequest Get(string user, string contactId);
+        public Contact Get(string user, string contactId);
 
         // create a new contact for user
         public bool Create(string user, Contact contact);

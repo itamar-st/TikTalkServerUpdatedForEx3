@@ -23,7 +23,7 @@ namespace ChatServer.Controllers
         // GET: api/contacts
         public IActionResult Index(string user)
         {
-            List<ContactRequest> contacts = _contactService.GetAll(user);
+            List<Contact> contacts = _contactService.GetAll(user);
             if (contacts == null)
             {
                 return BadRequest();
@@ -34,7 +34,7 @@ namespace ChatServer.Controllers
         // GET: api/contacts/{id} 
         public IActionResult Details(string user, string contactId)
         {
-            ContactRequest contact = _contactService.Get(user, contactId);
+            Contact contact = _contactService.Get(user, contactId);
             if (contact == null)
             {
                 return NotFound();
