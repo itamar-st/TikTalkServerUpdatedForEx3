@@ -7,19 +7,19 @@ namespace Services
         //hardcoded list to represent the DB
         private static ICollection<User> _users = new List<User>() {
                                                                         new User() { 
-                                                                            Id = "Emma",
-                                                                            Name = "Grandma",
-                                                                            Password = "1",
+                                                                            Id = "emma",
+                                                                            Name = "emma",
+                                                                            Password = "12345678Aa",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
                                                                             {
                                                                                 new Contact() {
-                                                                                    Id = "Itamar",
-                                                                                    Name = "ita",
+                                                                                    Id = "itamar",
+                                                                                    Name = "itamar",
                                                                                     Last = "",
-                                                                                    Lastdate = "5.5.5",
+                                                                                    Lastdate = "",
                                                                                     Server = "localhost:5051",
-                                                                                    ChatWithContact = new List<Message> { }
+                                                                                    ChatWithContact = new List<Message>()
 
                                                                                 }
 
@@ -28,17 +28,8 @@ namespace Services
 
                                                                         new User()
                                                                         {
-                                                                            Id = "Gil",
-                                                                            Name = "Gili", 
-                                                                            Password = "1",
-                                                                            ProfilePic = "",
-                                                                            Contacts = new List<Contact>()
-                                                                        },
-
-                                                                        new User()
-                                                                        {
-                                                                            Id = "Dude",
-                                                                            Name = "Dude",
+                                                                            Id = "gil",
+                                                                            Name = "gili", 
                                                                             Password = "12345678Aa",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
@@ -46,11 +37,31 @@ namespace Services
 
                                                                         new User()
                                                                         {
-                                                                            Id = "Itamar",
-                                                                            Name = "Itamar",
+                                                                            Id = "dude",
+                                                                            Name = "dude",
                                                                             Password = "12345678Aa",
                                                                             ProfilePic = "",
                                                                             Contacts = new List<Contact>()
+                                                                        },
+
+                                                                        new User()
+                                                                        {
+                                                                            Id = "itamar",
+                                                                            Name = "itamar",
+                                                                            Password = "12345678Aa",
+                                                                            ProfilePic = "",
+                                                                            Contacts = new List<Contact>()
+                                                                            {
+                                                                                 new Contact() {
+                                                                                    Id = "emma",
+                                                                                    Name = "emma",
+                                                                                    Last = "",
+                                                                                    Lastdate = "",
+                                                                                    Server = "localhost:5051",
+                                                                                    ChatWithContact = new List<Message>()
+
+                                                                                }
+                                                                            }
                                                                         }
                                                                     };
 
