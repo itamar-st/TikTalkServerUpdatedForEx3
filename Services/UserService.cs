@@ -6,7 +6,7 @@ namespace Services
     {
         //hardcoded list to represent the DB
         private static ICollection<User> _users = new List<User>() {
-                                                                        new User() { 
+                                                                        new User() {
                                                                             Id = "emma",
                                                                             Name = "emma",
                                                                             Password = "12345678Aa",
@@ -16,10 +16,25 @@ namespace Services
                                                                                 new Contact() {
                                                                                     Id = "itamar",
                                                                                     Name = "itamar",
-                                                                                    Last = "",
-                                                                                    Lastdate = "",
+                                                                                    Last = "good, how are you?",
+                                                                                    Lastdate = "28/05/2022 12:12:26",
                                                                                     Server = "localhost:5051",
                                                                                     ChatWithContact = new List<Message>()
+                                                                                    {
+                                                                                        new Message() {
+                                                                                            Id = 0,
+                                                                                            Created = "28/05/2022 12:12:23",
+                                                                                            Sent = true,
+                                                                                            Content = "hi itamar, how are you?"
+                                                                                        },
+
+                                                                                         new Message() {
+                                                                                            Id = 1,
+                                                                                            Created = "28/05/2022 12:12:26",
+                                                                                            Sent = false,
+                                                                                            Content = "good, how are you?"
+                                                                                        }
+                                                                                    }
 
                                                                                 }
 
@@ -55,10 +70,25 @@ namespace Services
                                                                                  new Contact() {
                                                                                     Id = "emma",
                                                                                     Name = "emma",
-                                                                                    Last = "",
-                                                                                    Lastdate = "",
+                                                                                    Last = "good, how are you?",
+                                                                                    Lastdate = "28/05/2022 12:12:26",
                                                                                     Server = "localhost:5051",
                                                                                     ChatWithContact = new List<Message>()
+                                                                                     {
+                                                                                        new Message() {
+                                                                                            Id = 0,
+                                                                                            Created = "28/05/2022 12:12:23",
+                                                                                            Sent = false,
+                                                                                            Content = "hi itamar, how are you?"
+                                                                                        },
+
+                                                                                         new Message() {
+                                                                                            Id = 1,
+                                                                                            Created = "28/05/2022 12:12:26",
+                                                                                            Sent = true,
+                                                                                            Content = "good, how are you?"
+                                                                                        }
+                                                                                    }
 
                                                                                 }
                                                                             }
