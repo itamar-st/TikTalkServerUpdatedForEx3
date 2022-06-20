@@ -1,25 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Services;
+using System.Text.Json.Nodes;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace webServerAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransferController : ControllerBase
+    public class transferController : ControllerBase
     {
         private static TransferService _transferService;
 
-        public TransferController()
+        public transferController()
         {
             _transferService = new TransferService();
         }
-        // POST api/<TransferController>
+        // POST api/<transferController>
         [HttpPost]
-        public void Post([Bind("From, To, Content")] Transfer transfer)
+        public IActionResult Post([Bind("From, To, Content")] Transfer transfer)
         {
-            _transferService.SendMessage(transfer);
+            if (_transferService.SendMessage(transfer) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+            
         }
     }
 }

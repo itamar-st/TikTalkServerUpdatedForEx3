@@ -9,10 +9,10 @@ public class User
     public string Name { get; set; } // Nickname
     
     [Required]
-    public string ProfilePicURL { get; set; }
+    public string ProfilePic { get; set; }
     [Required]
     public string Password { get; set; }
-    public ICollection<Contact> Contacts { get; set; }
+    public List<Contact> Contacts { get; set; }
 
 
 }

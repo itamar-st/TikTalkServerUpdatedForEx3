@@ -1,42 +1,105 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using Domain;
+using Services;
+
 namespace Services
 {
     public class ContactService
     {
-        public static List<Contact> contacts = new List<Contact>();
-
-        public List<Contact> GetAll()
+        UserService userService = new UserService();
+        public List<ContactRequest> GetAll(string user)
         {
-            return contacts;
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                List<Contact> usersContacts = currntUser.Contacts;
+                List<ContactRequest> contactsForSending = new List<ContactRequest>();
+                foreach (Contact contact in usersContacts)
+                {
+                    ContactRequest contactRequest = new ContactRequest()
+                    {
+                        Id = contact.Id,
+                        Name = contact.Name,
+                        Last = contact.Last,
+                        Lastdate = contact.Lastdate,
+                        Server = contact.Server
+                    };
+                    contactsForSending.Add(contactRequest);
+                }
+                return contactsForSending;
+            }
+            catch { return null; }
+
         }
 
-        public Contact Get(string id)
+        public ContactRequest Get(string user, string contactId)
         {
-            return contacts.Find(x => x.Id == id);
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+
+
+                ContactRequest contactRequest = new ContactRequest()
+                {
+                    Id = currentContact.Id,
+                    Name = currentContact.Name,
+                    Last = currentContact.Last,
+                    Lastdate = currentContact.Lastdate,
+                    Server = currentContact.Server
+                };
+                return contactRequest;
+            }
+            catch { return null; }
+
+
+            }
+
+        public bool Create(string user, Contact contact)
+        {
+            try
+            {
+                User currntUser = userService.Get(user);
+
+                currntUser.Contacts.Add(contact);
+                return true;
+            }
+            catch { return false; }
+
         }
 
-        public void Create(Contact contact)
+        public bool Edit(string user, string contactId, JsonObject content)
         {
-            contacts.Add(contact);
+            try
+            {
+                //TODO: check if field actualy exists in JSON obj
+                User currntUser = userService.Get(user);
+
+                Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+
+
+                currentContact.Name = content["name"].ToString();
+                currentContact.Server = content["server"].ToString();
+                return true;
+            }
+            catch { return false; }
         }
 
-        public void Edit(string contactId, JsonObject content)
+        public bool Delete(string user, string id)
         {
-            //TODO: check if field actualy exists in JSON obj
-            Contact currentContact = contacts.Find(x => x.Id == contactId);
-            currentContact.Name = content["name"].ToString();
-            currentContact.Server = content["server"].ToString();
-        }
+            try
+            {
+                User currntUser = userService.Get(user);
 
-        public void Delete(string id)
-        {
-            contacts.RemoveAll(x => x.Id == id);
+                // TODO: deleting a contact that doesent exists - send error?
+                currntUser.Contacts.RemoveAll(x => x.Id == id);
+                return true;
+            }
+            catch { return false; }
+
         }
     }
 }
