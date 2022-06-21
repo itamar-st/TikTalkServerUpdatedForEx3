@@ -24,15 +24,22 @@ namespace Services
                                                                                         new Message() {
                                                                                             Id = 0,
                                                                                             Created = "28/05/2022 12:12:23",
-                                                                                            Sent = true,
+                                                                                            Sent = false,
                                                                                             Content = "hi itamar, how are you?"
                                                                                         },
 
                                                                                          new Message() {
                                                                                             Id = 1,
                                                                                             Created = "28/05/2022 12:12:26",
+                                                                                            Sent = true,
+                                                                                            Content = "good, how are you? :)"
+                                                                                        },
+
+                                                                                         new Message() {
+                                                                                            Id = 3,
+                                                                                            Created = "28/05/2022 12:12:26",
                                                                                             Sent = false,
-                                                                                            Content = "good, how are you?"
+                                                                                            Content = "great!"
                                                                                         }
                                                                                     }
 
