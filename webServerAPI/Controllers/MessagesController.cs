@@ -43,18 +43,33 @@ namespace ChatServer.Controllers
             return Ok(message);
         }
 
+        //[HttpPost("{contactId}/messages")]
+        //// POST: /api/contacts/{id}/messages
+        //public IActionResult Create(string user, string contactId, [FromBody] JsonObject content)
+        //{
+        //    // true because i sent the message
+        //     if(_messageService.Create(user, contactId, content, true) == false)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    return Created("api/contacts/{contactId}/messages", "");
+
+        //}
+
         [HttpPost("{contactId}/messages")]
         // POST: /api/contacts/{id}/messages
-        public IActionResult Create(string user, string contactId, [FromBody] JsonObject content)
+        public IActionResult Create(string user, string contactId, [FromBody] string content)
         {
             // true because i sent the message
-             if(_messageService.Create(user, contactId, content, true) == false)
+            if (_messageService.Create(user, contactId, content, true) == false)
             {
                 return BadRequest();
             }
             return Created("api/contacts/{contactId}/messages", "");
 
         }
+
+
         [HttpPut("{contactId}/messages/{msgId}")]
         //PUT: /api/contacts/{id}/messages/{msgId}
 

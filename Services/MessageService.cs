@@ -40,7 +40,43 @@ namespace Services
             catch { return null; }
 
         }
-        public bool Create(string user, string contactId, JsonObject content, bool sentByMe)
+        //public bool Create(string user, string contactId, JsonObject content, bool sentByMe)
+        //{
+        //    try
+        //    {
+        //        int nextid;
+        //        User currntUser = currntUser = userService.Get(user);
+
+        //        // get the contact from the DB
+        //        List<Contact> contacts = currntUser.Contacts;
+        //        Contact currentContact = contacts.Find(x => x.Id == contactId);
+        //        //give the msg an id
+        //        if (currentContact.ChatWithContact.Count == 0)
+        //        {
+        //            nextid = 0;
+        //        }
+        //        else
+        //        {
+        //            nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
+        //        }
+        //        //create the message
+        //        Message message = new Message()
+        //        {
+        //            Id = nextid,
+        //            Created = DateTime.Now.ToString(),
+        //            Content = content["content"].ToString(),
+        //            Sent = sentByMe
+        //        };
+        //        //push to the DB
+        //        currentContact.ChatWithContact.Add(message);
+        //        contactService.EditLastMsg(user, contactId, message.Content, message.Created);
+        //        return true;
+        //    }
+        //    // if not exists or an error occurde 
+        //    catch { return false; }
+        //    }
+
+        public bool Create(string user, string contactId, string content, bool sentByMe)
         {
             try
             {
@@ -64,7 +100,7 @@ namespace Services
                 {
                     Id = nextid,
                     Created = DateTime.Now.ToString(),
-                    Content = content["content"].ToString(),
+                    Content = content,
                     Sent = sentByMe
                 };
                 //push to the DB
@@ -74,7 +110,7 @@ namespace Services
             }
             // if not exists or an error occurde 
             catch { return false; }
-            }
+        }
 
         public bool Edit(string user, string contactId, int msgId, JsonObject content)
         {

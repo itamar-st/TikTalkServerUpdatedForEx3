@@ -12,7 +12,9 @@ namespace Services
 
         //create a new message in the conversation between user and contactId
         //retun true on success and false otherwise
-        public bool Create(string user, string contactId, JsonObject content, bool fromTransfer);
+        //public bool Create(string user, string contactId, JsonObject content, bool fromTransfer);
+        public bool Create(string user, string contactId, string content, bool fromTransfer);
+
 
         // edit an existing msg between user and contactId
         public bool Edit(string user, string contactId, int msgId, JsonObject content);
