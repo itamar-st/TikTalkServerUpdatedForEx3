@@ -16,7 +16,7 @@ public class Contact
     [Required]
     public string Server { get; set; }
     [JsonIgnore]
-    public string UserIdNum { get; set; }
+    public string UserIdNum { get; set; } = "";
     //public virtual User User { get; set; }
     [JsonIgnore]
     [ForeignKey("ContactIdNum, UserIdNum1")]

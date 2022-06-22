@@ -17,8 +17,6 @@ namespace Services
 
                     // get the contact from the DB
                 Contact? currentContact = contactService.Get(user,contactId);
-                //List<Contact> contacts = currntUser.Contacts;
-                //Contact currentContact = contacts.Find(x => x.Id == contactId);
 
                 return currentContact.ChatWithContact.ToList<Message>();
             }
@@ -34,8 +32,6 @@ namespace Services
                 User currntUser = userService.Get(user);
 
                 // get the contact from the DB
-                //List<Contact> contacts = currntUser.Contacts;
-                //Contact currentContact = contacts.Find(x => x.Id == contactId);
                 Contact? currentContact = contactService.Get(user, contactId);
 
                 return currentContact.ChatWithContact.Find(
@@ -55,18 +51,13 @@ namespace Services
                 try
                 {
                 int nextid;
-                User currntUser = currntUser = userService.Get(user);
-
                 // get the contact from the DB
-                //List<Contact> contacts = currntUser.Contacts;
                 Contact? currentContact = contactService.Get(user, contactId);
                 //give the msg an id
-                if (currentContact.ChatWithContact.Count == 0)
-                {
+                if (currentContact.ChatWithContact.Count == 0){
                     nextid = 0;
                 }
-                else
-                {
+                else{
                     nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
                 }
                 //create the message
@@ -80,10 +71,9 @@ namespace Services
                     UserIdNum1 = user
                 };
                 //push to the DB
-                currentContact.ChatWithContact.Add(message);
                 db.Add(message);
                 contactService.EditLastMsg(user, contactId, message.Content, message.Created);
-                    db.SaveChanges();
+                db.SaveChanges();
                 return true;
             }
             // if not exists or an error occurde 
@@ -117,8 +107,6 @@ namespace Services
                 // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
-
-                // TODO: deleting a message that doesent exists - send error?
                 currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
                 return true;
             }

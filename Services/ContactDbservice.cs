@@ -14,12 +14,11 @@ namespace Services
             {
                 try
                 {
-                    // get current user
-                    //User? currntUser = userService.Get(user);
-                    //User? currntUser = db.Users.Find(user);
-                    //return currntUser.Contacts.ToList();
-                    return db.Contactsdb.Include(c => c.ChatWithContact).ToList<Contact>().
-                        FindAll(u=>u.UserIdNum == user);
+                    // get from DB
+                    return db.Contactsdb.
+                        Include(c => c.ChatWithContact)
+                        .ToList<Contact>()
+                        .FindAll(u=>u.UserIdNum == user);
 
                 }
                 // if failed
@@ -35,11 +34,9 @@ namespace Services
             {
                 try
                 {
-                    List<Contact> clist = db.Contactsdb.Include(c => c.ChatWithContact).ToList<Contact>();
-                    return clist.Find(u => u.UserIdNum == user && u.Id == contactId);
-                //get current user
-                //User currntUser = userService.Get(user);
-                //return currntUser.Contacts.Find(x => x.Id == contactId);
+                    // get from DB
+                    List<Contact> contacts = db.Contactsdb.Include(c => c.ChatWithContact).ToList<Contact>();
+                    return contacts.Find(u => u.UserIdNum == user && u.Id == contactId);
             }
             catch { return null; }
 
@@ -55,26 +52,15 @@ namespace Services
                 {
                     try
                     {
-                    User? currntUser = userService.Get(user);
-                    contact.UserIdNum = user;
+                    // add to DB
                     db.Add(contact);
-                    currntUser.Contacts.Add(contact);
-                    db.SaveChanges();
+                        db.SaveChanges();
                         return true;
                     }
                     catch { return false; }
 
                 }
-                //try
-                //{
-                //    //get current user
-                //    User currntUser = userService.Get(user);
-                //    // add contact to currentUser contacts
-                //    currntUser.Contacts.Add(contact);
-                //    return true;
-                //}
-                //catch { return false; }
-
+                
             }
 
         public bool Edit(string user, string contactId, JsonObject content)
@@ -94,18 +80,25 @@ namespace Services
         }
         public bool EditLastMsg(string user, string contactId, string last, string lastDate)
         {
-            try
+            using (var db = new UserContext())
             {
-                User currntUser = userService.Get(user);
-                //get the contact
-                //Contact currentContact = currntUser.Contacts.Find(x => x.Id == contactId);
+                try
+                {
+                    // find the contact to change
                 Contact currentContact = Get(user, contactId);
                 currentContact.Last = last;
                 currentContact.Lastdate = lastDate;
+                    //update the DB
+                    db.Attach(currentContact);
+                    db.Entry(currentContact).Property(c => c.Last).IsModified = true;
+                    db.Entry(currentContact).Property(c => c.Lastdate).IsModified = true;
+                    db.SaveChanges();
                 return true;
             }
             // false if failed
             catch { return false; }
+
+            }
         }
         public bool Delete(string user, string id)
         {
