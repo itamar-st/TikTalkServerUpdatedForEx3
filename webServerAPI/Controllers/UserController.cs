@@ -15,7 +15,7 @@ namespace Controllers
 
         public UserController()
         {
-            this._userService = new UserService();
+            this._userService = new userDbservice();
         }
 
 

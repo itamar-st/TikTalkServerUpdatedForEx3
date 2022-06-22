@@ -15,7 +15,7 @@ public class invitationsController : ControllerBase
 
     public invitationsController()
     {
-        _invitationService = new InvitationService();
+        _invitationService = new InvitationDbService();
     }
     // POST api/invitations
     [HttpPost]

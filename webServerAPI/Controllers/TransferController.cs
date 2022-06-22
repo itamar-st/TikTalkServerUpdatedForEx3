@@ -16,7 +16,7 @@ namespace webServerAPI.Controllers
 
         public transferController()
         {
-            _transferService = new TransferService();
+            _transferService = new TransferDbService();
         }
         // POST api/transfer
         //activated when the user recieves a message from other users

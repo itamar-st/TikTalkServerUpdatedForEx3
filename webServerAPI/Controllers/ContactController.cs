@@ -17,7 +17,7 @@ namespace ChatServer.Controllers
 
         public contactsController()
         {
-            _contactService = new ContactService();
+            _contactService = new ContactDbService();
         }
         [HttpGet]
         // GET: api/contacts
