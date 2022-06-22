@@ -1,9 +1,9 @@
 ﻿using Domain;
 namespace Services
 {
-    public class InvitationService : IInvitationService
+    public class InvitationDbService : IInvitationService
     {
-        IContactService contactService = new ContactService();
+        IContactService contactService = new ContactDbService();
         public bool SendInvitation(Invitation invitation)
         {
             try

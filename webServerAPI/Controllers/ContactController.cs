@@ -4,49 +4,72 @@ using Microsoft.AspNetCore.Mvc;
 using Services;
 using Domain;
 using System.Text.Json.Nodes;
+using webServerAPI.Controllers;
 
 namespace ChatServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ContactController : ControllerBase
+    [Route("api/[controller]")]
+    //controller for the Contact model
+    public class contactsController : ControllerBase
     {
-        private static ContactService _contactService;
+        private static IContactService _contactService;
 
-        public ContactController()
+        public contactsController()
         {
-            _contactService = new ContactService();
+            _contactService = new ContactDbService();
         }
         [HttpGet]
-        // GET: ContactController
-        public IEnumerable<Contact> Index()
+        // GET: api/contacts
+        public IActionResult Index(string user)
         {
-            //TODO: return not found exception if not exist
-            return _contactService.GetAll();
+            List<Contact> contacts = _contactService.GetAll(user);
+            if (contacts == null)
+            {
+                return BadRequest();
+            }
+            return Ok(contacts);
         }
-        [HttpGet("{id}")]
-        // GET: ContactController/Details/5 
-        public Contact Details(string id)
+        [HttpGet("{contactId}")]
+        // GET: api/contacts/{id} 
+        public IActionResult Details(string user, string contactId)
         {
-            return _contactService.Get(id);
+            Contact contact = _contactService.Get(user, contactId);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return Ok(contact);
         }
-        // POST: ContactController/Create
+        // POST: api/contacts
         [HttpPost]
-        public void Create([Bind("Id, Name, Server")]Contact contact)
+        public IActionResult Create(string user, [Bind("Id, Name, Server")]Contact contact)
         { 
-            //TODO: check how to get multiple args as json
-            _contactService.Create(contact);
+            if(_contactService.Create(user, contact) == false)
+            {
+                return BadRequest();
+            }
+            return Created("api/contacts", "");
         }
         [HttpPut("{contactId}")]
-        //put: ContactController/Edit/5
-        public void Edit(string contactId, [FromBody] JsonObject content)
+        //PUT: api/contacts/{id}
+        public IActionResult Edit(string user, string contactId, [FromBody] JsonObject content)
         {
-            _contactService.Edit(contactId, content);
+            if (_contactService.Edit(user, contactId, content) == false) {
+                return BadRequest();
+            }
+            return NoContent();
+
         }
         [HttpDelete("{contactId}")]
-        public void Delete(string contactId)
+        // DELETE: api/contacts/{id}
+        public IActionResult Delete(string user, string contactId)
         {
-            _contactService.Delete(contactId);
+            if(_contactService.Delete(user, contactId) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
     }
 }

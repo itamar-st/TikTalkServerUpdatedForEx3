@@ -1,90 +1,72 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using Domain;
-namespace ChatServer.Controllers
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    //controller for the User model
+    public class UserController : ControllerBase
     {
-        private static UserService _userService;
+        private IUsersService _userService;
 
         public UserController()
         {
-            _userService = new UserService();
-        }
-        // GET: UserController
-        public ActionResult Index()
-        {
-            return View();
+            this._userService = new userDbservice();
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
+
+        // get all users
+        // GET: api/<UsersController>
+        [HttpGet]
+        public IActionResult Get()
         {
-            return View();
+            IEnumerable<User> users = _userService.Get();
+            if(users == null) return NotFound();
+
+            return Ok(users);
         }
 
-        // GET: UserController/Create
-        public ActionResult Create()
+
+        // get user
+        // GET api/<UsersController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
         {
-            return View();
+            var user = _userService.Get(id);
+            if(user == null) return NotFound();
+
+            return Ok(user);
         }
 
-        // POST: UserController/Create
+
+        // add user
+        // POST api/<UsersController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Post([FromBody] User user)
         {
-            try
+            if(_userService.Post(user) == false)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
-            {
-                return View();
-            }
+            return NoContent();
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+
+        // delete user
+        // DELETE api/<UsersController>/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
         {
-            return View();
+            if(_userService.Delete(id) == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
 
-        // POST: UserController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

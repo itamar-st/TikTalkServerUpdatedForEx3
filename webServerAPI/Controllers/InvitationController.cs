@@ -1,24 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Services;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Text.Json.Nodes;
 
 namespace webServerAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InvitationController : ControllerBase
-{
-    private static InvitationService _invitationService;
+//controller for the Invitation model
 
-    public InvitationController()
+public class invitationsController : ControllerBase
+{
+    private static IInvitationService _invitationService;
+
+    public invitationsController()
     {
-        _invitationService = new InvitationService();
+        _invitationService = new InvitationDbService();
     }
-    // POST api/<InvitationController>
+    // POST api/invitations
     [HttpPost]
-    public void Post([Bind("From, To, Server")] Invitation invitation)
+    public IActionResult Post([Bind("From, To, Server")] Invitation invitation)
     {
-        _invitationService.SendInvitation(invitation);
+        if(_invitationService.SendInvitation(invitation) == false)
+        {
+            return BadRequest();
+        }
+        return NoContent();
     }
 }

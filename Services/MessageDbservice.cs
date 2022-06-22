@@ -2,26 +2,28 @@
 using Domain;
 namespace Services
 {
-    public class MessageService : IMessageService
+    public class MessageDbService : IMessageService
     {
-        UserService userService = new UserService();
-        ContactService contactService = new ContactService();
+        IUsersService userService = new userDbservice();
+        IContactService contactService = new ContactDbService();
 
         public List<Message> GetAll(string user, string contactId)
         {
-            try
+            using (var db = new UserContext())
             {
+                try
+                {
                 User currntUser = userService.Get(user);
 
-                // get the contact from the DB
-                List<Contact> contacts = currntUser.Contacts;
-                Contact currentContact = contacts.Find(x => x.Id == contactId);
+                    // get the contact from the DB
+                Contact? currentContact = contactService.Get(user,contactId);
 
-
-                return currentContact.ChatWithContact;
+                return currentContact.ChatWithContact.ToList<Message>();
             }
             // if not exists or an error occurde 
             catch { return null; }
+
+            }
         }
         public Message Get(string user, string contactId, int msgId)
         {
@@ -30,11 +32,12 @@ namespace Services
                 User currntUser = userService.Get(user);
 
                 // get the contact from the DB
-                List<Contact> contacts = currntUser.Contacts;
-                Contact currentContact = contacts.Find(x => x.Id == contactId);
+                Contact? currentContact = contactService.Get(user, contactId);
 
-
-                return currentContact.ChatWithContact.Find(x => x.Id == msgId);
+                return currentContact.ChatWithContact.Find(
+                    m=>m.UserIdNum1 == user &&
+                    m.ContactIdNum == contactId &&
+                    m.Id == msgId);
             }
             // if not exists or an error occurde 
             catch { return null; }
@@ -42,21 +45,19 @@ namespace Services
         }
         public bool Create(string user, string contactId, JsonObject content, bool sentByMe)
         {
-            try
+            using (var db = new UserContext())
             {
-                int nextid;
-                User currntUser = currntUser = userService.Get(user);
 
-                // get the contact from the DB
-                List<Contact> contacts = currntUser.Contacts;
-                Contact currentContact = contacts.Find(x => x.Id == contactId);
-                //give the msg an id
-                if (currentContact.ChatWithContact.Count == 0)
+                try
                 {
+                int nextid;
+                // get the contact from the DB
+                Contact? currentContact = contactService.Get(user, contactId);
+                //give the msg an id
+                if (currentContact.ChatWithContact.Count == 0){
                     nextid = 0;
                 }
-                else
-                {
+                else{
                     nextid = currentContact.ChatWithContact.Max(x => x.Id) + 1;
                 }
                 //create the message
@@ -65,16 +66,20 @@ namespace Services
                     Id = nextid,
                     Created = DateTime.Now.ToString(),
                     Content = content["content"].ToString(),
-                    Sent = sentByMe
+                    Sent = sentByMe,
+                    ContactIdNum = contactId,
+                    UserIdNum1 = user
                 };
                 //push to the DB
-                currentContact.ChatWithContact.Add(message);
+                db.Add(message);
                 contactService.EditLastMsg(user, contactId, message.Content, message.Created);
+                db.SaveChanges();
                 return true;
             }
             // if not exists or an error occurde 
             catch { return false; }
             }
+        }
 
         public bool Edit(string user, string contactId, int msgId, JsonObject content)
         {
@@ -102,8 +107,6 @@ namespace Services
                 // get the contact from the DB
                 List<Contact> contacts = currntUser.Contacts;
                 Contact currentContact = contacts.Find(x => x.Id == contactId);
-
-                // TODO: deleting a message that doesent exists - send error?
                 currentContact.ChatWithContact.RemoveAll(x => x.Id == msgId);
                 return true;
             }

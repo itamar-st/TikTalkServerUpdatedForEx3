@@ -8,10 +8,10 @@ using Domain;
 
 namespace Services
 {
-    public class TransferService : ITransferService
+    public class TransferDbService : ITransferService
     {
-        MessageService messageService = new MessageService();
-        ContactService contactService = new ContactService();
+        IMessageService messageService = new MessageDbService();
+        IContactService contactService = new ContactDbService();
        public bool onMessageArrival(Transfer transfer)
         {
             try
