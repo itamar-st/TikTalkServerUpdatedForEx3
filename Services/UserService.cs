@@ -18,7 +18,7 @@ namespace Services
                                                                                     Name = "itamar",
                                                                                     Last = "good, how are you?",
                                                                                     Lastdate = "28/05/2022 12:12:26",
-                                                                                    Server = "localhost:5051",
+                                                                                    Server = "5051",
                                                                                     ChatWithContact = new List<Message>()
                                                                                     {
                                                                                         new Message() {
@@ -72,7 +72,7 @@ namespace Services
                                                                                     Name = "emma",
                                                                                     Last = "good, how are you?",
                                                                                     Lastdate = "28/05/2022 12:12:26",
-                                                                                    Server = "localhost:5051",
+                                                                                    Server = "5051",
                                                                                     ChatWithContact = new List<Message>()
                                                                                      {
                                                                                         new Message() {
