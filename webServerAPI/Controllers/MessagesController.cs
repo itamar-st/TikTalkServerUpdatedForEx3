@@ -15,7 +15,7 @@ namespace ChatServer.Controllers
         private static IMessageService _messageService;
         public messagesController()
         {
-            _messageService = new MessageService();
+            _messageService = new MessageDbService();
         }
         [HttpGet("{contactId}/messages")]
         // GET: /api/contacts/{id}/messages

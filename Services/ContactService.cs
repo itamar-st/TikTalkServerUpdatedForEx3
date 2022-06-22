@@ -4,7 +4,6 @@ using Domain;
 using Services;
 namespace Services
 {
-    //test
     public class ContactService : IContactService
     {
         UserService userService = new UserService();
