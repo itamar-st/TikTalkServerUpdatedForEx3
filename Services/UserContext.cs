@@ -5,7 +5,7 @@ namespace Services
 {
     public class UserContext : DbContext
     {
-        private const string connectionString = "server=localhost;port= 3306;database=UsersDB;user=root;password=12345678Aa";
+        private const string connectionString = "server=localhost;port=3306;database=UsersDB;user=root;password=12345678Aa";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(connectionString, MariaDbServerVersion.AutoDetect(connectionString));

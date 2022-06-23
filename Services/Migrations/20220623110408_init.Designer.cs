@@ -10,8 +10,8 @@ using Services;
 namespace Services.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20220622095625_Initialdb3")]
-    partial class Initialdb3
+    [Migration("20220623110408_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
