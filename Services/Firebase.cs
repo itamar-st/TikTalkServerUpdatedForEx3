@@ -10,7 +10,14 @@ namespace Services
     {
         public static Dictionary<string,string> usersDict = new Dictionary<string,string>();
 
-        public static void Add(string user, string token) { usersDict.Add(user, token); }
+        public static void Add(string user, string token) {
+            if (!usersDict.ContainsKey(user))
+            {
+                usersDict.Add(user, token);
+            }
+            usersDict[user] = token;
+         }
+
         public static string Get(string user) { 
             if(!usersDict.ContainsKey(user))
             {
