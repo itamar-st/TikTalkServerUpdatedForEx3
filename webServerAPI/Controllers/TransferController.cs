@@ -1,5 +1,6 @@
 ﻿using Domain;
 using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -45,7 +46,22 @@ namespace webServerAPI.Controllers
             {
                 return;
             }
-            Message m = new Firebase().
+            var msg = new FirebaseAdmin.Messaging.Message()
+            {
+                Token = token,
+                Data = new Dictionary<string, string>()
+                {
+                    { "From", transfer.From },
+                    { "Content", transfer.Content }
+                },
+                Notification = new FirebaseAdmin.Messaging.Notification()
+                {
+                    Title = "New message from " + transfer.From,
+                    Body = transfer.Content
+                }
+            };
+
+            await FirebaseMessaging.DefaultInstance.SendAsync(msg);
         }
     }
 }
