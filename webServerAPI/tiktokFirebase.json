@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tiktalk-af946",
+  "private_key_id": "0c646af99626a1f11865324238d92f37fd49eebe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDl0ivMV2yoPuDH\naBrKrkFUpvMhz8fFN+mPqbw98ZqD0oDpNqeXDrBacj9OCDsyUXHD575R1Vcp1fFx\n0y5Od3rbzab9m9zhSFAVELQUyrH4yic52WKygAa04uGHP7JYYqPdksHO9FrABo6c\n0OKdr7LYfLJL/WePP9eLzFiNJKLVs3d5SyGSnEyj7oNNcY09DBYAiuHA/U6vm4xd\nPkW379YQDeN8GsLxT2IfnjwehTztMJY20sMs8SAaGLwKK43ml4bXkfpONS1kpiTi\nvDGYdb6Q8SBjR9HwC8Z7bEjEQ0JWl1c/Hu5A7xtr0QFqBMtqiMscmjmU3lq/ofoX\nPDWIRrynAgMBAAECggEAPQwJf1OftMdTDRT9vOXxy6s3PT2EusIB5Bv5uViSqz6A\n6LIQbWNE/BmJ8E/mbZTNy/SkjPdHGoFOi+ZFUCmTtIxZtdcvopYDU70moLlA8i28\norS4b2LrpSP5NWR5mtnE3mgL3E3zRzvWqRghgjJ4JuJkuCO9XQNf3a4vvXpEWNA8\n5W2AD2M+65lASIMIzOSJ96aQf9ybgNtmEM9qhwygncabuo6XTwp9wZ2OHhnGW7sT\nFpStjCSQdLoDknD1GpJDRP0469ifIDkB06GCtB7e62Sb+dXJybVgOp9uxBhMk11J\ne5gXzfoMoKE9n8Y4OaHwHKfNRHp92Gez8MpctU15BQKBgQD2HzpId8vn5VaVizIY\nAaM3D6qExCjEtPhxbJvuIlRQJAb6ylM1WjKp+on3dk58FXT4j3Zabv6m/k2SZ8UW\nnctZDBB3TNU+cImWSs1838AKXsXVb3EpKoAFvvq345YxxHLV5pdDzAmLhuCUVgG3\ntduVbRdZPclwsONTwoEQelRvqwKBgQDvC3WUpSayAmAyYMDchFYduRzjgcQZqqfT\nqrmDUaa7zeCjT8jzu4LaChNLUP1yXA24FaQCFfcNaKq17NTd1RyXNvV1UEa4p+us\n4nvybHfd6VcDmFZWbbFt3vC0IFAdyeZ+nMMdOW/2A4OFZLfHFcvht05wExZSPW0v\nClbJj+Ga9QKBgDZ3LKey0w3rY6DOX/SOEDd0IREmc7ssLTq0hUFKmYvunRjMw2Mw\nJbwV9IgtxyqQeQU0gkV7AKGl7zax/hyGKOT41YABIcOileALh7PVtCLXXEJiWhF5\nFUGwRL2DAM7coWkSkXDwa0BURcity82C0igcLymRkc19Z6E2juc9mwfnAoGAc8KP\n4TkNAR1Han4SR3fKoEA5ri70QR20gjtl9SMAZGgxxcRoYyfGGULRzyJcahoMBr5s\nGxp59kNekBUtjHOckdnqijIi3V9sMN/I+D/w2EUcf0AxZ09dogBZflE7mwFgHqZZ\nknhzMKbI9TsuCDoU7qyvTnTf1Vmr2yDdoGSN81UCgYAbabrxiqm6TzNX8rBBctD4\nl+8j1t9m7B1Sq2aXEuarOG/0j7Zo9HxYX2TG/8g/JPFT8D97LXWTU7rrohKg01QG\nkpfXkwz0phffHl93S9yDT06hnbxz85avjrqTaJ7p3ZLsWozjMlXGzNXW9W26ABwE\nOaSXc5jmv4O2F2jcUX9ubQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-9mkss@tiktalk-af946.iam.gserviceaccount.com",
+  "client_id": "113441472272145878848",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-9mkss%40tiktalk-af946.iam.gserviceaccount.com"
+}
