@@ -53,6 +53,7 @@ namespace Services
                     try
                     {
                     // add to DB
+                    contact.UserIdNum = user;
                     db.Add(contact);
                         db.SaveChanges();
                         return true;
