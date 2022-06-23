@@ -16,11 +16,11 @@ In order to run the project:
       
 2) Open TikTalkAndroid and run it using the emulator (suggested device - pixel 2 with android 11):
    
-  https://github.com/ShovalWeinstock/TikTalkAndroid
+    https://github.com/ShovalWeinstock/TikTalkAndroid
   
 3) Register to the applications:
 
-  suggested password: 12345678Aa
+    suggested password: 12345678Aa
 
 4) exit from the applications:
 
